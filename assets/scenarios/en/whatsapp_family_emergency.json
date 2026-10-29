@@ -1,0 +1,24 @@
+{
+  "id": "whatsapp_family_emergency",
+  "language": "en",
+  "title": "Family Emergency WhatsApp",
+  "channel": "whatsapp",
+  "difficulty": "medium",
+  "scammer_persona": {
+    "name": "Unknown Number (Disguised as Son/Daughter)",
+    "institution": "Family Emergency",
+    "voice_style": "panicked"
+  },
+  "goal": "Trick grandparent into sending emergency money for an accident or police trouble",
+  "tactics": ["urgency", "emotional manipulation"],
+  "script_skeleton": [],
+  "red_flags": [
+    "Asking from an unknown number claiming 'lost phone'",
+    "Demanding immediate UPI transfer without voice verification"
+  ],
+  "success_conditions": ["called_family_directly", "refused"],
+  "failure_conditions": ["sent_money"],
+  "web_page": null,
+  "debrief_success": "Wonderful! Always call your family member directly on their known phone number before reacting.",
+  "debrief_failure": "Scammers often impersonate grandchildren in distress. Always verify by calling them back directly."
+}

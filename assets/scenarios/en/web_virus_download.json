@@ -1,0 +1,32 @@
+{
+  "id": "web_virus_download",
+  "language": "en",
+  "title": "Fake Virus Alert & Harmful APK",
+  "channel": "web",
+  "difficulty": "medium",
+  "scammer_persona": {
+    "name": "Android Device Security Scanner",
+    "institution": "System Protection Alert",
+    "voice_style": "urgent"
+  },
+  "goal": "Trick user into downloading and installing a dangerous APK file disguised as an antivirus cleaner",
+  "tactics": ["fear", "fabricated_evidence"],
+  "initial_message": "CRITICAL: (5) Viruses detected on your phone! Battery and bank logins leaking. Tap to download cleaner.",
+  "web_page": {
+    "url": "http://android-virus-cleaner-booster.xyz/scan-results",
+    "alert_title": "⚠️ CRITICAL SYSTEM ALERT: 5 VIRUSES DETECTED!",
+    "alert_body": "Your Android phone is heavily infected with Trojan.Banker.Spyware. If not cleaned in 60 seconds, your personal gallery and banking passwords will be compromised.",
+    "download_file": "Antivirus_Cleaner_Pro_v3.2.apk",
+    "damage_percent": "28.4%"
+  },
+  "red_flags": [
+    "A webpage claiming to have scanned your phone for viruses",
+    "Pressure to download an '.apk' file from a web browser",
+    "Flashing animations claiming battery/bank damage"
+  ],
+  "success_conditions": ["closed_tab", "refused_download"],
+  "failure_conditions": ["downloaded_apk", "installed_file"],
+  "debrief_success": "Brilliant choice! You refused to download the file. Web browsers CANNOT scan your phone's memory. Any website claiming your phone has viruses is trying to trick you into installing malware. Only install verified apps from the official Google Play Store.",
+  "debrief_failure": "You clicked to download the APK! Downloading and installing .apk files from web browsers is the #1 way scammers infect phones with SMS-reading and screen-recording trojans. Always close such pages immediately without tapping download buttons."
+}
+

@@ -1,0 +1,147 @@
+[
+  {
+    "id": "whatsapp_family_emergency",
+    "title": "Hospital Emergency from Son",
+    "channel": "whatsapp",
+    "difficulty": "medium",
+    "scammer_name": "Unknown Number (Son/Daughter)",
+    "persona": "a desperate son or daughter who lost their phone, calling from an unknown number at a hospital, desperately asking their elderly parent to send emergency money via GPay/UPI",
+    "goal": "manipulate emotional panic so the senior transfers 5,000 rupees immediately without checking",
+    "initial_message": "Mom/Dad it's me. My phone broke and I am at the hospital after an accident. Please GPay 5000 rupees urgently to this hospital pharmacy number.",
+    "debrief_success": "Wonderful! You refused to send money blindly. Always call your child directly on their known regular phone number before reacting to emergency requests.",
+    "debrief_failure": "You agreed to send money! Scammers frequently impersonate distressed family members from unknown numbers. Always verify by calling their known number."
+  },
+  {
+    "id": "whatsapp_police_bribe",
+    "title": "Police Digital Arrest Warrant",
+    "channel": "whatsapp",
+    "difficulty": "hard",
+    "scammer_name": "Inspector Patil (Cyber Crime)",
+    "persona": "a harsh, authoritative police officer Inspector Patil claiming the user's child is arrested in a criminal case and demanding an immediate bribe to avoid an FIR",
+    "goal": "intimidate the parent into sending 10,000 rupees bribe via UPI to avoid an arrest",
+    "initial_message": "Hello, this is Inspector Patil from Crime Branch. Your son is in our custody for a serious crime. Transfer 10,000 rupees now if you want to settle this without an FIR.",
+    "debrief_success": "Excellent defense! Real police officers NEVER settle cases over WhatsApp or demand UPI transfers to drop charges.",
+    "debrief_failure": "You agreed to pay! This is a classic 'Digital Arrest' scam. Law enforcement never asks for online payments to release detainees."
+  },
+  {
+    "id": "whatsapp_electricity",
+    "title": "Electricity Bill Cutoff Threat",
+    "channel": "whatsapp",
+    "difficulty": "easy",
+    "scammer_name": "Power Board Officer",
+    "persona": "an electricity department officer claiming an unpaid bill will lead to immediate power disconnection tonight",
+    "goal": "trick the user into paying a fake bill or clicking an APK update link",
+    "initial_message": "Dear consumer, your electricity power will be disconnected tonight at 9:30 PM due to pending bill of ₹1,450. Call this officer number immediately to clear your dues.",
+    "debrief_success": "Great job! Electricity boards never send disconnection threats from personal numbers asking for direct transfers.",
+    "debrief_failure": "You agreed to pay! Electricity companies follow formal billing procedures with notice periods, never urgent cutoff threats over WhatsApp."
+  },
+  {
+    "id": "whatsapp_lottery",
+    "title": "KBC / WhatsApp Mega Lottery",
+    "channel": "whatsapp",
+    "difficulty": "easy",
+    "scammer_name": "Prize Manager Rana",
+    "persona": "a lottery agent congratulating the user for winning a 25 Lakh rupee lucky draw prize, asking for a small processing fee",
+    "goal": "trick user into paying a ₹2,500 'processing and tax' fee to release the prize",
+    "initial_message": "Congratulations! Your mobile number won 25 Lakh Rupees in the All-India Lucky Draw. To receive your cheque, pay ₹2,500 government tax fee.",
+    "debrief_success": "Smart! You can never win a lottery you didn't buy a ticket for. Real lotteries never ask for upfront taxes to claim prizes.",
+    "debrief_failure": "You agreed to pay the processing fee! In lottery scams, any advance fee you send is stolen and no prize ever arrives."
+  },
+  {
+    "id": "call_bank_kyc",
+    "title": "Bank Account KYC & OTP Call",
+    "channel": "call",
+    "difficulty": "easy",
+    "scammer_name": "Metro Trust Bank Manager",
+    "persona": "a polite, formal bank verification officer warning that the user's ATM card and account will be frozen today unless they verify an OTP",
+    "goal": "trick the senior into reading out their 6-digit one-time password (OTP)",
+    "initial_message": "Hello, I am calling from your bank head office. Your account KYC has expired. Read the 6-digit code sent to your SMS to prevent card blocking.",
+    "debrief_success": "Perfect! Banks never ask for OTPs or PINs over phone calls. By refusing, your funds stayed safe.",
+    "debrief_failure": "You shared your OTP! Sharing an OTP gives scammers direct access to withdraw money from your bank account."
+  },
+  {
+    "id": "call_digital_arrest",
+    "title": "CBI Officer Video Arrest Call",
+    "channel": "call",
+    "difficulty": "hard",
+    "scammer_name": "CBI Officer Sharma",
+    "persona": "a strict CBI investigator claiming a parcel sent under the senior's Aadhaar card contains illegal narcotics and money laundering funds",
+    "goal": "keep the senior on the line, isolate them from family, and demand asset verification deposits",
+    "initial_message": "This is Officer Sharma from CBI Mumbai. A package with 5 passports and illegal drugs was seized under your Aadhaar number. You are under digital arrest.",
+    "debrief_success": "Outstanding courage! Police and CBI never conduct arrests over phone calls or demand secret deposits.",
+    "debrief_failure": "You panicked and stayed on the call! CBI never calls to demand money or declare digital arrests over the phone."
+  },
+  {
+    "id": "call_tech_support",
+    "title": "Microsoft PC Hacking Support",
+    "channel": "call",
+    "difficulty": "medium",
+    "scammer_name": "Windows Support Engineer",
+    "persona": "a fast-talking computer technician claiming dangerous hackers have invaded the senior's device and demanding remote access",
+    "goal": "trick user into installing screen-sharing tools like AnyDesk or TeamViewer",
+    "initial_message": "Hello, this is Microsoft Security. We detected active hackers on your computer stealing passwords. I need you to install AnyDesk to secure it.",
+    "debrief_success": "Well done! Tech companies never cold-call users to report hacking. Never allow remote access to strangers.",
+    "debrief_failure": "You agreed to install software! Remote desktop apps give scammers complete control of your screen and OTPs."
+  },
+  {
+    "id": "sms_delivery_fee",
+    "title": "Failed Parcel & ₹5 Address Fee",
+    "channel": "sms",
+    "difficulty": "easy",
+    "scammer_name": "India Postal Delivery",
+    "persona": "an automated courier delivery bot claiming a parcel cannot be delivered due to incomplete house address",
+    "goal": "get the senior to click a fake phishing link to enter card details for a ₹5 fee",
+    "initial_message": "Your parcel #IN8892 could not be delivered due to missing house number. Update address & pay ₹5 redelivery fee at http://ind-post-track.xyz",
+    "debrief_success": "Excellent! Postal services never send third-party links demanding small fees to update addresses.",
+    "debrief_failure": "You clicked the link! The fake ₹5 payment page steals your complete credit or debit card details."
+  },
+  {
+    "id": "sms_job_offer",
+    "title": "Part-Time YouTube Like & Earn",
+    "channel": "sms",
+    "difficulty": "medium",
+    "scammer_name": "HR Recruiter Priya",
+    "persona": "a friendly HR agent offering ₹3,000 to ₹5,000 daily for liking YouTube videos from home",
+    "goal": "lure senior into a prepaid task scam where they must deposit money to withdraw 'profits'",
+    "initial_message": "Earn ₹3,500 daily from home just by liking videos! No experience needed. Join our Telegram manager to start receiving instant daily payouts.",
+    "debrief_success": "Great! Legitimate companies never pay thousands of rupees for simply liking videos. This is a task deposit scam.",
+    "debrief_failure": "You replied to the offer! Scammers pay ₹200 initially, then demand lakhs of rupees in deposits that can never be withdrawn."
+  },
+  {
+    "id": "web_digital_lock",
+    "title": "Police Device Lock Page",
+    "channel": "web",
+    "difficulty": "hard",
+    "scammer_name": "Cyber Cell Device Lock",
+    "persona": "a browser lock screen claiming the user's phone is seized and demanding an immediate fine via UPI",
+    "goal": "panic user into paying ₹15,000 penalty on an unverified webpage",
+    "initial_message": "ALERT: Your device is seized by Cyber Police for illegal downloads. Pay fine within 15 mins or police warrant will be executed.",
+    "debrief_success": "Brilliant! You realized websites cannot lock your phone. Closing the browser tab or swiping home easily stops it.",
+    "debrief_failure": "You attempted to pay! Real police never lock devices over web browsers or demand online UPI penalties."
+  },
+  {
+    "id": "web_virus_download",
+    "title": "Fake Virus Alert & Harmful APK",
+    "channel": "web",
+    "difficulty": "medium",
+    "scammer_name": "System Security Scanner",
+    "persona": "a flashing webpage claiming 5 viruses have infected the device and urging an APK download",
+    "goal": "trick user into downloading an .apk malware file onto their phone",
+    "initial_message": "CRITICAL: (5) Viruses detected on your phone! Battery and bank logins leaking. Tap to download cleaner.",
+    "debrief_success": "Superb! Websites cannot scan your phone for viruses. Never download .apk files from browser popups.",
+    "debrief_failure": "You tapped download! Downloading .apk files from unknown websites installs SMS-reading and screen-recording trojans."
+  },
+  {
+    "id": "web_bank_login",
+    "title": "Urgent Bank NetBanking Update",
+    "channel": "web",
+    "difficulty": "easy",
+    "scammer_name": "Metro Trust Bank Portal",
+    "persona": "a clone of a bank login portal asking for username, password, and ATM PIN",
+    "goal": "steal online banking credentials and ATM PIN",
+    "initial_message": "Urgent verification required: Update your NetBanking credentials to prevent account suspension.",
+    "debrief_success": "Outstanding! You inspected the domain and safely closed the page without entering your passwords.",
+    "debrief_failure": "You entered your bank credentials! Phishing websites copy the look of official banks to steal passwords."
+  }
+]
+

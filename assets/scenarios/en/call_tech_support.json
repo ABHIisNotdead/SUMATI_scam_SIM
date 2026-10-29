@@ -1,0 +1,72 @@
+{
+  "id": "call_tech_support",
+  "language": "en",
+  "title": "Fake Tech Support",
+  "channel": "call",
+  "difficulty": "medium",
+  "scammer_persona": {
+    "name": "Windows Support Agent",
+    "institution": "Microsoft Tech Support",
+    "voice_style": "urgent"
+  },
+  "goal": "Trick the user into downloading remote access software",
+  "tactics": ["fear", "authority"],
+  "script_skeleton": [
+    {
+      "beat": 1,
+      "speaker": "scammer",
+      "intent": "create fear",
+      "sample": "Hello, this is Microsoft Support. We have detected malicious hacking activity on your computer. Your bank details are at risk.",
+      "user_options": [
+        {
+          "text": "Oh no, what should I do?",
+          "outcome": "continue",
+          "feedback": "The scammer wants you to panic. Let's see what they ask for next."
+        },
+        {
+          "text": "I don't even own a Windows computer.",
+          "outcome": "success:refused",
+          "feedback": "Great catch! Scammers often guess which devices you use."
+        },
+        {
+          "text": "Hang up",
+          "outcome": "success:hung_up",
+          "feedback": "Perfect! Microsoft will never call you directly to say your computer is hacked."
+        }
+      ]
+    },
+    {
+      "beat": 2,
+      "speaker": "scammer",
+      "intent": "request remote access",
+      "sample": "I need to secure your network immediately. Please download the 'AnyDesk' app on your phone so I can block the hackers.",
+      "user_options": [
+        {
+          "text": "Okay, I am downloading it now.",
+          "outcome": "failure:downloaded_app",
+          "feedback": "Never download screen-sharing apps like AnyDesk on a cold call. This lets the scammer control your phone."
+        },
+        {
+          "text": "I will take my computer to a local repair shop instead.",
+          "outcome": "success:refused",
+          "feedback": "Excellent choice. Always rely on trusted local professionals rather than strangers on the phone."
+        },
+        {
+          "text": "Hang up",
+          "outcome": "success:hung_up",
+          "feedback": "Well done! Any request to download remote access software is an immediate red flag."
+        }
+      ]
+    }
+  ],
+  "red_flags": [
+    "Unsolicited call from 'Microsoft' or 'Apple'",
+    "Creating panic about hackers or bank details",
+    "Asking you to download apps like AnyDesk or TeamViewer"
+  ],
+  "success_conditions": ["hung_up", "refused"],
+  "failure_conditions": ["downloaded_app"],
+  "web_page": null,
+  "debrief_success": "Great job! Tech companies will never call you out of the blue to warn you about hackers. By hanging up, you kept your device safe.",
+  "debrief_failure": "If you download remote access software, the scammer can see your screen, read your OTPs, and steal money from your banking apps. Never install apps instructed by a stranger on the phone."
+}

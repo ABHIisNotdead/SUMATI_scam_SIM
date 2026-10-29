@@ -1,0 +1,24 @@
+{
+  "id": "call_digital_arrest",
+  "language": "en",
+  "title": "Digital Arrest Scam Call",
+  "channel": "call",
+  "difficulty": "hard",
+  "scammer_persona": {
+    "name": "Cyber Crime Bureau Officer",
+    "institution": "National Cyber Crime Unit",
+    "voice_style": "authoritative"
+  },
+  "goal": "Isolate the senior and demand extortion money under fake warrants",
+  "tactics": ["fear", "authority", "secrecy"],
+  "script_skeleton": [],
+  "red_flags": [
+    "Threat of immediate arrest over a video call",
+    "Demanding money to clear legal charges"
+  ],
+  "success_conditions": ["hung_up", "refused"],
+  "failure_conditions": ["shared_money", "isolated"],
+  "web_page": null,
+  "debrief_success": "Excellent! Real police officers never conduct arrests or demand money over video calls.",
+  "debrief_failure": "This is a dangerous 'Digital Arrest' scam. Law enforcement never asks for online transfers to drop charges."
+}

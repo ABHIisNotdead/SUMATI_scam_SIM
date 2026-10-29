@@ -1,0 +1,23 @@
+{
+  "id": "call_bank_kyc",
+  "language": "en",
+  "title": "Bank KYC / OTP Call",
+  "channel": "call",
+  "difficulty": "easy",
+  "scammer_persona": {
+    "name": "Metro Trust Bank Officer",
+    "institution": "Metro Trust Bank",
+    "voice_style": "formal"
+  },
+  "goal": "Trick the user into sharing a fake OTP",
+  "tactics": ["urgency", "authority"],
+  "script_skeleton": [],
+  "red_flags": [
+    "Unsolicited call claiming to be from the bank"
+  ],
+  "success_conditions": ["hung_up", "refused", "verified_independently"],
+  "failure_conditions": ["shared_otp"],
+  "web_page": null,
+  "debrief_success": "Great job! You protected yourself. Real banks never ask for OTPs over the phone.",
+  "debrief_failure": "In a real scam, sharing your OTP could let scammers steal money from your account."
+}

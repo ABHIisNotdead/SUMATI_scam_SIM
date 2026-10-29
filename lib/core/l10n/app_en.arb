@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "appTitle": "Sumati",
+  "homeWelcome": "Welcome back",
+  "choosePractice": "Choose a Practice",
+  "familyDashboard": "Family Dashboard",
+  "emergencyChecklist": "Emergency Checklist",
+  "askAi": "Ask AI Checker",
+  "roleSenior": "I am a Senior (Practice)",
+  "roleFamily": "I am a Family Member (Setup)"
+}

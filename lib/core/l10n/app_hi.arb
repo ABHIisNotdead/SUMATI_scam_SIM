@@ -1,0 +1,11 @@
+{
+  "@@locale": "hi",
+  "appTitle": "सुमति",
+  "homeWelcome": "वापसी पर स्वागत है",
+  "choosePractice": "अभ्यास चुनें",
+  "familyDashboard": "परिवार डैशबोर्ड",
+  "emergencyChecklist": "आपातकालीन चेकलिस्ट",
+  "askAi": "एआई से पूछें",
+  "roleSenior": "मैं एक वरिष्ठ नागरिक हूँ (अभ्यास)",
+  "roleFamily": "मैं परिवार का सदस्य हूँ (सेटअप)"
+}

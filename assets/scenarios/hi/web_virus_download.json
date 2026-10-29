@@ -1,0 +1,32 @@
+{
+  "id": "web_virus_download",
+  "language": "hi",
+  "title": "नकली वायरस अलर्ट और हानिकारक ऐप",
+  "channel": "web",
+  "difficulty": "medium",
+  "scammer_persona": {
+    "name": "एंड्रॉइड सुरक्षा स्कैनर",
+    "institution": "सिस्टम सुरक्षा चेतावनी",
+    "voice_style": "urgent"
+  },
+  "goal": "उपयोगकर्ता को एंटीवायरस के नाम पर एक खतरनाक एपीके फाइल डाउनलोड और इंस्टॉल करवाने के लिए धोखा देना",
+  "tactics": ["fear", "fabricated_evidence"],
+  "initial_message": "गंभीर चेतावनी: आपके फोन में 5 वायरस पाए गए हैं! तुरंत क्लीनर डाउनलोड करें।",
+  "web_page": {
+    "url": "http://android-virus-cleaner-booster.xyz/scan-results",
+    "alert_title": "⚠️ सिस्टम अलर्ट: फोन में 5 वायरस मिले!",
+    "alert_body": "आपका फोन ट्रोजन वायरस से संक्रमित है। 60 सेकंड में साफ न करने पर आपकी बैंक जानकारी चोरी हो सकती है। तुरंत Antivirus_Cleaner_Pro.apk डाउनलोड करें।",
+    "download_file": "Antivirus_Cleaner_Pro_v3.2.apk",
+    "damage_percent": "28.4%"
+  },
+  "red_flags": [
+    "वेबसाइट का दावा कि उसने आपके फोन के वायरस स्कैन कर लिए हैं",
+    "ब्राउज़र से '.apk' फाइल डाउनलोड करने का दबाव",
+    "फोन खराब होने का डर दिखाकर तुरंत क्लिक करवाना"
+  ],
+  "success_conditions": ["closed_tab", "refused_download"],
+  "failure_conditions": ["downloaded_apk", "installed_file"],
+  "debrief_success": "शानदार फैसला! आपने फाइल डाउनलोड नहीं की। कोई भी वेबसाइट आपके फोन को स्कैन नहीं कर सकती। केवल गूगल प्ले स्टोर से ही सुरक्षित ऐप्स डाउनलोड करें।",
+  "debrief_failure": "आपने फाइल डाउनलोड पर क्लिक किया! किसी अनजान वेबसाइट से .apk फाइल डाउनलोड करना फोन में जासूसी और बैंक चोरी का वायरस डालने का सबसे बड़ा जरिया है। ऐसे पेज तुरंत बंद करें।"
+}
+

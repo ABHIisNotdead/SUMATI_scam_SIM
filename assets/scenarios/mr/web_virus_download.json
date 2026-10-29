@@ -1,0 +1,32 @@
+{
+  "id": "web_virus_download",
+  "language": "mr",
+  "title": "बनावट व्हायरस चेतावणी आणि घातक ॲप",
+  "channel": "web",
+  "difficulty": "medium",
+  "scammer_persona": {
+    "name": "सिस्टम सुरक्षा चेतावणी",
+    "institution": "सुरक्षा विभाग",
+    "voice_style": "urgent"
+  },
+  "goal": "वापरकर्त्याला क्लीनरच्या नावाखाली धोकादायक एपीके फाइल डाउनलोड करण्यास प्रवृत्त करणे",
+  "tactics": ["fear", "fabricated_evidence"],
+  "initial_message": "धोका: आपल्या फोनमध्ये 5 व्हायरस सापडले आहेत! त्वरित क्लीनर डाउनलोड करा.",
+  "web_page": {
+    "url": "http://android-virus-cleaner-booster.xyz/scan-results",
+    "alert_title": "⚠️ चेतावणी: फोनमध्ये 5 व्हायरस आढळले!",
+    "alert_body": "तुमचा फोन ट्रोजन व्हायरसने ग्रस्त आहे. बँक माहिती सुरक्षित ठेवण्यासाठी त्वरित Antivirus_Cleaner_Pro.apk डाउनलोड करा.",
+    "download_file": "Antivirus_Cleaner_Pro_v3.2.apk",
+    "damage_percent": "28.4%"
+  },
+  "red_flags": [
+    "वेबसाईट फोन व्हायरस स्कॅन केल्याचा दावा करत आहे",
+    "ब्राउझरवरून '.apk' फाईल डाउनलोड करण्याचा दबाव",
+    "घाबरवून घाईघाईत क्लिक करण्यास भाग पाडणे"
+  ],
+  "success_conditions": ["closed_tab", "refused_download"],
+  "failure_conditions": ["downloaded_apk", "installed_file"],
+  "debrief_success": "योग्य निर्णय! कोणतीही वेबसाईट थेट फोन स्कॅन करू शकत नाही. अनोळखी फाईल्स कधीही डाउनलोड करू नका. नेहमी फक्त गुगल प्ले स्टोअरवरूनच ॲप्स घ्या.",
+  "debrief_failure": "तुम्ही एपीके डाउनलोडवर क्लिक केले! अशा फाईल्समुळे फोनमध्ये बँक खाती हॅक करणारे व्हायरस येऊ शकतात. नेहमी असे पेज त्वरित बंद करा."
+}
+

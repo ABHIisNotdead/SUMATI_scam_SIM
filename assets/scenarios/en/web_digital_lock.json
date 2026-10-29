@@ -1,0 +1,32 @@
+{
+  "id": "web_digital_lock",
+  "language": "en",
+  "title": "Police Digital Device Lock",
+  "channel": "web",
+  "difficulty": "hard",
+  "scammer_persona": {
+    "name": "Central Cyber Crime Cell Notice",
+    "institution": "Ministry of Law & Cyber Security",
+    "voice_style": "threatening"
+  },
+  "goal": "Panic the senior into believing their phone is legally seized and force an immediate UPI penalty payment",
+  "tactics": ["fear", "authority", "artificial_urgency"],
+  "initial_message": "ALERT: Your device is seized by Cyber Police for illegal downloads. Pay fine within 15 mins or police warrant will be executed at your residence.",
+  "web_page": {
+    "url": "http://cyber-crime-division-notice.gov-verify.in/device-lock",
+    "alert_title": "🚨 LAW ENFORCEMENT NOTICE: PHONE LOCKED",
+    "alert_body": "This mobile device has been restricted under Section 66A of Cyber Crime Act due to unauthorized access and prohibited downloads. To lift this seizure and revoke immediate arrest warrants, pay the statutory fine of ₹15,000.",
+    "fine_amount": "₹15,000",
+    "timer_minutes": "14:59"
+  },
+  "red_flags": [
+    "Web page claiming police has locked your phone",
+    "Demanding payment of fines through UPI on a browser page",
+    "Threatening home arrest with a ticking timer countdown"
+  ],
+  "success_conditions": ["closed_tab", "swiped_home", "reported_1930"],
+  "failure_conditions": ["paid_fine", "entered_upi"],
+  "debrief_success": "Outstanding job! You recognized that websites CANNOT lock your device. Real police never lock phones through web browsers or demand online UPI penalties. Closing the tab, swiping home, or restarting your phone completely escapes these browser lockers.",
+  "debrief_failure": "You attempted to pay the fine! This is a classic 'Browser Locker' scam. Scammers design deceptive full-screen webpages that pretend your phone is locked by police. The device is not actually locked — simply close the browser tab or press Home."
+}
+
