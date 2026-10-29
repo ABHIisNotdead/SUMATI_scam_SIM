@@ -40,7 +40,6 @@ class SimulationTrigger {
     }
 
     final title = scenario.scammerName ?? scenario.title;
-    final persona = scenario.persona ?? 'a scammer attempting fraud';
     final initialMsg = scenario.initialMessage ?? 'Hello. Please respond urgently.';
 
     IconData icon = Icons.message;
@@ -80,12 +79,10 @@ class SimulationTrigger {
           cancelActiveSimulation();
           if (channel == 'call') {
             context.replace('/practice/call', extra: {'scenario': scenario, 'startActive': false});
+          } else if (channel == 'sms') {
+            context.push('/practice/sms', extra: scenario);
           } else {
-            context.push('/ai_chat', extra: {
-              'persona': persona,
-              'initialMessage': initialMsg,
-              'title': title,
-            });
+            context.push('/practice/whatsapp', extra: scenario);
           }
         },
         onDismissed: () {
@@ -120,13 +117,10 @@ class SimulationTrigger {
         if (channel == 'call') {
           // If no interaction in 5 seconds, navigate to /practice/call (startActive: false)
           context.replace('/practice/call', extra: {'scenario': scenario, 'startActive': false});
+        } else if (channel == 'sms') {
+          context.push('/practice/sms', extra: scenario);
         } else {
-          // whatsapp or sms -> 5-second timeout routes to /ai_chat
-          context.push('/ai_chat', extra: {
-            'persona': persona,
-            'initialMessage': initialMsg,
-            'title': title,
-          });
+          context.push('/practice/whatsapp', extra: scenario);
         }
       }
     });
@@ -337,26 +331,74 @@ class _TopHeadsUpNotificationState extends State<_TopHeadsUpNotification>
                           ],
                         ),
                       ),
-                      if (!isCall) ...[
-                        const SizedBox(width: 12),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                          decoration: BoxDecoration(
-                            color: AppTheme.primaryTeal.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(12),
+                      ],
+                    ),
+
+                  // Message / SMS Action Buttons (Android Style Reply & Open)
+                  if (!isCall) ...[
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        InkWell(
+                          onTap: widget.onTap,
+                          borderRadius: BorderRadius.circular(16),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFF1F3F4),
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(color: const Color(0xFFDADCE0)),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: const [
+                                Icon(Icons.reply_rounded, color: Color(0xFF1F1F1F), size: 16),
+                                SizedBox(width: 6),
+                                Text(
+                                  'Reply',
+                                  style: TextStyle(
+                                    color: Color(0xFF1F1F1F),
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          child: Text(
-                            UiStrings.get(l, 'open'),
-                            style: const TextStyle(
-                              color: AppTheme.primaryTeal,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13,
+                        ),
+                        const SizedBox(width: 8),
+                        InkWell(
+                          onTap: widget.onTap,
+                          borderRadius: BorderRadius.circular(16),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                            decoration: BoxDecoration(
+                              color: widget.channel == 'whatsapp'
+                                  ? const Color(0xFF008069)
+                                  : const Color(0xFF0B57D0),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(Icons.open_in_new_rounded, color: Colors.white, size: 15),
+                                const SizedBox(width: 6),
+                                Text(
+                                  UiStrings.get(l, 'open'),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ],
-                    ],
-                  ),
+                    ),
+                  ],
 
                   // Call Action Buttons: Decline (Hang Up) and Accept (Answer)
                   if (isCall) ...[
@@ -367,15 +409,16 @@ class _TopHeadsUpNotificationState extends State<_TopHeadsUpNotification>
                         // Decline / Hang Up Button
                         InkWell(
                           onTap: widget.onDeclineCall,
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(16),
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            height: 44,
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
                             decoration: BoxDecoration(
-                              color: AppTheme.red,
-                              borderRadius: BorderRadius.circular(20),
+                              color: AppTheme.tertiary,
+                              borderRadius: BorderRadius.circular(16),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppTheme.red.withValues(alpha: 0.3),
+                                  color: AppTheme.tertiary.withValues(alpha: 0.25),
                                   blurRadius: 6,
                                   offset: const Offset(0, 2),
                                 )
@@ -384,14 +427,14 @@ class _TopHeadsUpNotificationState extends State<_TopHeadsUpNotification>
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Icon(Icons.call_end, color: Colors.white, size: 16),
-                                const SizedBox(width: 6),
+                                const Icon(Icons.call_end_rounded, color: Colors.white, size: 18),
+                                const SizedBox(width: 8),
                                 Text(
                                   UiStrings.get(l, 'decline'),
                                   style: const TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13,
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 14,
                                   ),
                                 ),
                               ],
@@ -402,15 +445,16 @@ class _TopHeadsUpNotificationState extends State<_TopHeadsUpNotification>
                         // Accept / Answer Button
                         InkWell(
                           onTap: widget.onAcceptCall,
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(16),
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                            height: 44,
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
                             decoration: BoxDecoration(
-                              color: AppTheme.green,
-                              borderRadius: BorderRadius.circular(20),
+                              color: AppTheme.primaryContainer,
+                              borderRadius: BorderRadius.circular(16),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppTheme.green.withValues(alpha: 0.3),
+                                  color: AppTheme.primaryContainer.withValues(alpha: 0.3),
                                   blurRadius: 6,
                                   offset: const Offset(0, 2),
                                 )
@@ -419,14 +463,14 @@ class _TopHeadsUpNotificationState extends State<_TopHeadsUpNotification>
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Icon(Icons.call, color: Colors.white, size: 16),
-                                const SizedBox(width: 6),
+                                const Icon(Icons.call_rounded, color: Colors.white, size: 18),
+                                const SizedBox(width: 8),
                                 Text(
                                   UiStrings.get(l, 'answer'),
                                   style: const TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13,
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 14,
                                   ),
                                 ),
                               ],

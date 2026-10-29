@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import '../services/user_sync_service.dart';
 
 @HiveType(typeId: 1)
 class SimulationResult extends HiveObject {
@@ -75,6 +76,13 @@ class SimulationResult extends HiveObject {
       );
 
       await box.add(result);
+
+      // Also sync drill activity to backend SQLite database
+      UserSyncService.logDrillActivity(
+        scenarioTitle: scenarioTitle,
+        channel: channel,
+        status: status,
+      );
     } catch (_) {}
   }
 }

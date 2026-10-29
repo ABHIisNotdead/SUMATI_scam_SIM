@@ -5,16 +5,17 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../models/scenario.dart';
 import '../../features/scam_picker/scam_picker_screen.dart';
 import '../../features/call_practice/call_practice_screen.dart';
-import '../../features/message_practice/message_practice_screen.dart';
 import '../../features/web_practice/web_practice_screen.dart';
 import '../../features/debrief/debrief_screen.dart';
 import '../../features/scammed_checklist/scammed_checklist_screen.dart';
+import '../../features/scammed_checklist/scam_reports_feed_screen.dart';
 import '../../features/scam_checker/ask_ai_screen.dart';
-import '../../features/home/home_screen.dart';
 import '../../features/fake_android/fake_android_screen.dart';
 import '../../features/family/family_dashboard_screen.dart';
 import '../../features/onboarding/onboarding_screen.dart';
-import '../../features/message_practice/ai_chat_screen.dart';
+import '../../features/message_practice/whatsapp_practice_screen.dart';
+import '../../features/message_practice/sms_practice_screen.dart';
+import '../../features/scam_picker/scenarios_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   // Check preferences Hive box for isFirstLaunch
@@ -42,12 +43,20 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/home',
-        builder: (context, state) => const HomeScreen(),
+        builder: (context, state) => const ScamPickerScreen(),
       ),
       GoRoute(
         path: '/scam_picker',
         name: 'scam_picker',
         builder: (context, state) => const ScamPickerScreen(),
+      ),
+      GoRoute(
+        path: '/scenarios',
+        name: 'scenarios',
+        builder: (context, state) {
+          final channel = (state.extra as String?) ?? state.uri.queryParameters['channel'];
+          return ScenariosScreen(initialChannel: channel);
+        },
       ),
       GoRoute(
         path: '/fake_android',
@@ -88,16 +97,36 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/practice/whatsapp',
         name: 'whatsapp_practice',
         builder: (context, state) {
-          final scenario = state.extra as Scenario?;
-          return MessagePracticeScreen(channelType: 'whatsapp', scenario: scenario);
+          final extra = state.extra;
+          if (extra is Scenario) {
+            return WhatsAppPracticeScreen(scenario: extra);
+          } else if (extra is Map<String, dynamic>) {
+            return WhatsAppPracticeScreen(
+              scenario: extra['scenario'] as Scenario?,
+              title: extra['title'] as String?,
+              persona: extra['persona'] as String?,
+              initialMessage: extra['initialMessage'] as String?,
+            );
+          }
+          return const WhatsAppPracticeScreen();
         },
       ),
       GoRoute(
         path: '/practice/sms',
         name: 'sms_practice',
         builder: (context, state) {
-          final scenario = state.extra as Scenario?;
-          return MessagePracticeScreen(channelType: 'sms', scenario: scenario);
+          final extra = state.extra;
+          if (extra is Scenario) {
+            return SmsPracticeScreen(scenario: extra);
+          } else if (extra is Map<String, dynamic>) {
+            return SmsPracticeScreen(
+              scenario: extra['scenario'] as Scenario?,
+              title: extra['title'] as String?,
+              persona: extra['persona'] as String?,
+              initialMessage: extra['initialMessage'] as String?,
+            );
+          }
+          return const SmsPracticeScreen();
         },
       ),
       GoRoute(
@@ -135,6 +164,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const ScammedChecklistScreen(),
       ),
       GoRoute(
+        path: '/scam_reports_feed',
+        name: 'scam_reports_feed',
+        builder: (context, state) => const ScamReportsFeedScreen(),
+      ),
+      GoRoute(
         path: '/progress',
         name: 'progress',
         builder: (context, state) => const Scaffold(body: Center(child: Text('Progress & Badges'))),
@@ -156,7 +190,15 @@ final routerProvider = Provider<GoRouter>((ref) {
           final persona = extraMap?['persona']?.toString() ?? 'a scammer attempting fraud';
           final initialMessage = extraMap?['initialMessage']?.toString() ?? 'Hello, please respond immediately.';
           final title = extraMap?['title']?.toString();
-          return AiChatScreen(
+          final channel = extraMap?['channel']?.toString();
+          if (channel == 'sms') {
+            return SmsPracticeScreen(
+              persona: persona,
+              initialMessage: initialMessage,
+              title: title,
+            );
+          }
+          return WhatsAppPracticeScreen(
             persona: persona,
             initialMessage: initialMessage,
             title: title,

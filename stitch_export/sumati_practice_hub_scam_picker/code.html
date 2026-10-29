@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container": "#edeeec", "on-secondary-fixed": "#281900", "on-secondary-container": "#6c4a00", "tertiary-fixed-dim": "#ffb3ae", "error": "#ba1a1a", "secondary-container": "#feb726", "secondary": "#7e5700", "primary-container": "#006d5b", "on-tertiary": "#ffffff", "on-surface-variant": "#3e4945", "inverse-primary": "#81d6c0", "on-tertiary-fixed": "#410004", "on-tertiary-fixed-variant": "#930014", "surface-bright": "#f8faf7", "primary": "#005344", "on-error-container": "#93000a", "surface-container-low": "#f2f4f2", "primary-fixed": "#9df3dc", "surface-container-lowest": "#ffffff", "on-tertiary-container": "#ffd0cc", "error-container": "#ffdad6", "secondary-fixed-dim": "#ffba36", "on-error": "#ffffff", "inverse-on-surface": "#f0f1ef", "on-background": "#191c1b", "on-surface": "#191c1b", "on-primary-fixed": "#00201a", "surface-container-highest": "#e1e3e1", "tertiary-container": "#ba2027", "secondary-fixed": "#ffdeac", "background": "#f8faf7", "on-secondary": "#ffffff", "primary-fixed-dim": "#81d6c0", "surface-dim": "#d9dad8", "on-primary": "#ffffff", "on-primary-container": "#96ebd5", "outline": "#6e7975", "on-secondary-fixed-variant": "#5f4100", "tertiary-fixed": "#ffdad7", "surface-container-high": "#e7e9e6", "surface-tint": "#006b59", "surface": "#f8faf7", "inverse-surface": "#2e3130", "on-primary-fixed-variant": "#005143", "surface-variant": "#e1e3e1", "tertiary": "#960014", "outline-variant": "#bec9c4" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.75rem", "space-lg": "1.5rem", "space-xs": "0.375rem", "gutter": "1rem", "space-xl": "2.25rem", "space-md": "1rem", "margin": "1.25rem" }, "fontFamily": { "headline-xl-mobile": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "headline-xl": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "label-sm": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"], "body-xl": ["Plus Jakarta Sans"] }, "fontSize": { "headline-xl-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "label-lg": ["16px", { "lineHeight": "22px", "letterSpacing": "0.01em", "fontWeight": "700" }], "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }], "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }], "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "700" }], "label-sm": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "800" }], "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "body-lg": ["17px", { "lineHeight": "26px", "fontWeight": "400" }], "body-xl": ["19px", { "lineHeight": "28px", "fontWeight": "500" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col antialiased selection:bg-primary selection:text-on-primary"><header class="fixed top-0 inset-x-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="bg-secondary-fixed text-on-secondary-fixed px-margin py-1.5 flex items-center justify-between text-center"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[18px]">verified_user</span><span class="font-label-sm text-label-sm uppercase tracking-wide">अभ्यास मोड • SAFE PRACTICE ZONE</span></div><span class="font-label-sm text-label-sm bg-surface-container-lowest text-secondary px-2 py-0.5 rounded-full font-bold shadow-sm">100% SECURE</span></div><div class="h-20 px-margin flex items-center justify-between gap-space-sm"><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[22px]">shield_locked</span><span class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Sumati सुरक्षा</span></div><span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Suraksha Home</span></div><div class="flex items-center gap-space-xs"><button aria-label="Language Selector" class="min-h-[44px] min-w-[44px] px-2.5 py-1.5 rounded-lg bg-surface-container flex items-center justify-center gap-1 text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-primary text-[18px]">translate</span><span class="font-label-md text-label-md">अ / A</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-28 pb-32 px-margin bg-surface"><div class="flex flex-col w-full pb-8 space-y-space-md">
+<!-- Top Practice Safety Ribbon -->
+<div class="w-full bg-secondary-container text-on-secondary-container rounded-xl p-space-sm shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[24px] text-on-secondary-container shrink-0" style="font-variation-settings: 'FILL' 1;">gpp_good</span>
+<span class="font-label-lg text-label-lg tracking-tight">⚠️ PRACTICE – NOT REAL • 100% सुरक्षित अभ्यास</span>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container-lowest text-secondary uppercase font-bold shrink-0 shadow-sm">
+      SAFE SIM
+    </span>
+</div>
+<!-- Reassuring Header & Multilingual Selector -->
+<div class="flex flex-col gap-space-sm pt-1">
+<div class="flex items-center justify-between gap-2">
+<div class="flex flex-col min-w-0">
+<h1 class="font-headline-lg text-headline-lg font-bold text-on-surface truncate">
+          Choose Practice / अभ्यास चुनें
+        </h1>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px] text-primary" style="font-variation-settings: 'FILL' 1;">tips_and_updates</span>
+<span>आराम से सीखें, कोई असली पैसे नहीं कटेंगे</span>
+</p>
+</div>
+<!-- Family Dashboard Button -->
+<button aria-label="Open Family Dashboard" class="shrink-0 min-h-[48px] px-3.5 rounded-xl bg-surface-container-high text-on-surface flex items-center gap-1.5 shadow-sm active:scale-95 transition-transform" type="button">
+<span class="text-[20px]">👨‍👩‍👧</span>
+<span class="font-label-md text-label-md font-bold whitespace-nowrap">परिवार Dashboard</span>
+</button>
+</div>
+<!-- Language Selector Pills -->
+<div class="w-full grid grid-cols-3 gap-2 p-1 bg-surface-container rounded-xl">
+<button class="lang-pill min-h-[44px] rounded-lg bg-primary text-on-primary font-label-md text-label-md font-bold flex items-center justify-center gap-1 shadow-sm transition-all" onclick="selectLanguage(this, 'en')" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-primary">check</span>
+<span>English</span>
+</button>
+<button class="lang-pill min-h-[44px] rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md font-bold flex items-center justify-center gap-1 shadow-sm transition-all" onclick="selectLanguage(this, 'hi')" type="button">
+<span>हिंदी</span>
+</button>
+<button class="lang-pill min-h-[44px] rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md font-bold flex items-center justify-center gap-1 shadow-sm transition-all" onclick="selectLanguage(this, 'mr')" type="button">
+<span>मराठी</span>
+</button>
+</div>
+</div>
+<!-- Motivational Senior Progress Card -->
+<div class="w-full bg-surface-container-low rounded-2xl p-space-md shadow-sm flex items-center gap-space-md">
+<div class="relative w-14 h-14 shrink-0 flex items-center justify-center bg-surface-container-lowest rounded-full shadow-sm">
+<svg class="w-14 h-14 -rotate-90 transform" viewbox="0 0 48 48">
+<circle class="text-surface-container-high" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-primary" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-dasharray="125.6" stroke-dashoffset="44" stroke-linecap="round" stroke-width="4"></circle>
+</svg>
+<span class="absolute font-headline-md text-headline-md font-bold text-primary">65%</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">सुरक्षा मेडल: सतर्क दादाजी</span>
+<span class="text-[18px]">🎖️</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-1">
+        5 में से 3 जालसाज पकड़े! (3 of 5 scams identified)
+      </p>
+</div>
+</div>
+<!-- 3 Large Tactical Practice Modality Cards -->
+<section class="flex flex-col gap-3">
+<span class="font-label-sm text-label-sm uppercase font-bold text-on-surface-variant tracking-wider">
+      मोड चुनें • SELECT PRACTICE MODE
+    </span>
+<!-- 1. Call Practice -->
+<button class="w-full min-h-[80px] bg-surface-container-lowest text-left rounded-2xl p-space-md shadow-sm active:bg-surface-container-high active:scale-[0.99] transition-all flex items-center justify-between gap-space-sm group" onclick="startModality('call')" type="button">
+<div class="flex items-center gap-space-md min-w-0">
+<div class="w-14 h-14 rounded-2xl bg-primary-container text-on-primary-container shrink-0 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[30px]" style="font-variation-settings: 'FILL' 1;">call</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">📞 Call Practice</span>
+<span class="font-label-sm text-label-sm bg-primary-fixed text-on-primary-fixed px-1.5 py-0.5 rounded-full font-bold">3 SESSIONS</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant truncate">
+            Simulate a fake bank or police call • नकली फोन कॉल अभ्यास
+          </p>
+</div>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center shrink-0 group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
+<span class="material-symbols-outlined text-[24px]">chevron_right</span>
+</div>
+</button>
+<!-- 2. Message Practice -->
+<button class="w-full min-h-[80px] bg-surface-container-lowest text-left rounded-2xl p-space-md shadow-sm active:bg-surface-container-high active:scale-[0.99] transition-all flex items-center justify-between gap-space-sm group" onclick="startModality('message')" type="button">
+<div class="flex items-center gap-space-md min-w-0">
+<div class="w-14 h-14 rounded-2xl bg-secondary-fixed text-on-secondary-fixed shrink-0 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[30px]" style="font-variation-settings: 'FILL' 1;">chat</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">💬 Message Practice</span>
+<span class="font-label-sm text-label-sm bg-secondary-fixed text-on-secondary-fixed px-1.5 py-0.5 rounded-full font-bold">WHATSAPP / SMS</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant truncate">
+            Respond to WhatsApp or SMS scams • फर्जी मैसेज पहचानें
+          </p>
+</div>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center shrink-0 group-hover:bg-secondary-fixed group-hover:text-on-secondary-fixed transition-colors">
+<span class="material-symbols-outlined text-[24px]">chevron_right</span>
+</div>
+</button>
+<!-- 3. Website Practice -->
+<button class="w-full min-h-[80px] bg-surface-container-lowest text-left rounded-2xl p-space-md shadow-sm active:bg-surface-container-high active:scale-[0.99] transition-all flex items-center justify-between gap-space-sm group" onclick="startModality('website')" type="button">
+<div class="flex items-center gap-space-md min-w-0">
+<div class="w-14 h-14 rounded-2xl bg-tertiary-fixed text-on-tertiary-fixed shrink-0 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[30px]" style="font-variation-settings: 'FILL' 1;">language</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">🌐 Website Practice</span>
+<span class="font-label-sm text-label-sm bg-tertiary-fixed text-on-tertiary-fixed px-1.5 py-0.5 rounded-full font-bold">PHISHING</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant truncate">
+            Spot fake phishing websites &amp; links • नकली बैंक लिंक
+          </p>
+</div>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center shrink-0 group-hover:bg-tertiary-fixed group-hover:text-on-tertiary-fixed transition-colors">
+<span class="material-symbols-outlined text-[24px]">chevron_right</span>
+</div>
+</button>
+</section>
+<!-- Filter Pill Row (Horizontal Scroll) -->
+<div class="flex flex-col gap-2 pt-2">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase font-bold text-on-surface-variant tracking-wider">
+        दैनिक अभ्यास • PRACTICE SCENARIOS
+      </span>
+<span class="font-label-sm text-label-sm font-semibold text-primary">8 Available</span>
+</div>
+<div class="flex items-center gap-2 overflow-x-auto pb-1 -mx-margin px-margin no-scrollbar">
+<button class="filter-pill min-h-[44px] px-4 rounded-full bg-primary text-on-primary font-label-md text-label-md font-bold shrink-0 flex items-center gap-1 shadow-sm" onclick="filterScams('all', this)" type="button">
+<span class="material-symbols-outlined text-[16px]">check</span>
+<span>All (8)</span>
+</button>
+<button class="filter-pill min-h-[44px] px-4 rounded-full bg-surface-container text-on-surface font-label-md text-label-md font-bold shrink-0 flex items-center gap-1" onclick="filterScams('call', this)" type="button">
+<span>Call Practice (3)</span>
+</button>
+<button class="filter-pill min-h-[44px] px-4 rounded-full bg-surface-container text-on-surface font-label-md text-label-md font-bold shrink-0 flex items-center gap-1" onclick="filterScams('message', this)" type="button">
+<span>Message Practice (3)</span>
+</button>
+<button class="filter-pill min-h-[44px] px-4 rounded-full bg-surface-container text-on-surface font-label-md text-label-md font-bold shrink-0 flex items-center gap-1" onclick="filterScams('sms', this)" type="button">
+<span>SMS (2)</span>
+</button>
+<button class="filter-pill min-h-[44px] px-4 rounded-full bg-surface-container text-on-surface font-label-md text-label-md font-bold shrink-0 flex items-center gap-1" onclick="filterScams('website', this)" type="button">
+<span>Website (2)</span>
+</button>
+</div>
+</div>
+<!-- Scenario Cards List -->
+<div class="flex flex-col gap-space-sm" id="scenario-list">
+<!-- 1. Police Digital Arrest -->
+<article class="scenario-item w-full bg-surface-container-lowest rounded-2xl p-space-md shadow-sm flex flex-col gap-space-sm active:scale-[0.99] transition-all" data-category="call">
+<div class="flex items-center justify-between gap-2">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded-full bg-error-container text-on-error-container font-extrabold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_police</span>
+<span>HARD • कठिन</span>
+</span>
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface font-bold tracking-wide">
+            WHATSAPP VIDEO CALL
+          </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-semibold">~4 mins</span>
+</div>
+<div class="flex items-start gap-space-sm">
+<div class="w-12 h-12 rounded-xl bg-tertiary-fixed text-on-tertiary-fixed shrink-0 flex items-center justify-center mt-0.5">
+<span class="material-symbols-outlined text-[24px]">videocam_off</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface leading-snug">
+            Police "Digital Arrest" Warrant
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+            Caller claims illegal parcel has arrived in your Aadhaar name. Demands Skype video custody and bank deposits.
+          </p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span>Official CBI Impersonation</span>
+</div>
+<button class="min-h-[44px] px-4 rounded-xl bg-primary text-on-primary font-label-md text-label-md font-bold flex items-center gap-1 active:scale-95 transition-transform shadow-sm" onclick="startScenario('digital-arrest')" type="button">
+<span>अभ्यास शुरू करें</span>
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+</button>
+</div>
+</article>
+<!-- 2. Bank KYC Account Block -->
+<article class="scenario-item w-full bg-surface-container-lowest rounded-2xl p-space-md shadow-sm flex flex-col gap-space-sm active:scale-[0.99] transition-all" data-category="call">
+<div class="flex items-center justify-between gap-2">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-extrabold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+<span>MEDIUM • मध्यम</span>
+</span>
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface font-bold tracking-wide">
+            PHONE CALL
+          </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-semibold">~3 mins</span>
+</div>
+<div class="flex items-start gap-space-sm">
+<div class="w-12 h-12 rounded-xl bg-secondary-fixed text-on-secondary-fixed shrink-0 flex items-center justify-center mt-0.5">
+<span class="material-symbols-outlined text-[24px]">account_balance</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface leading-snug">
+            Bank KYC Account Block Threat
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+            Fake SBI / PNB manager claims your pension account is frozen today. Urgently asks for 6-digit OTP to renew KYC.
+          </p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-secondary text-[18px]" style="font-variation-settings: 'FILL' 1;">timer</span>
+<span>Urgent Pressure Tactic</span>
+</div>
+<button class="min-h-[44px] px-4 rounded-xl bg-primary text-on-primary font-label-md text-label-md font-bold flex items-center gap-1 active:scale-95 transition-transform shadow-sm" onclick="startScenario('kyc-block')" type="button">
+<span>अभ्यास शुरू करें</span>
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+</button>
+</div>
+</article>
+<!-- 3. Electricity Cutoff SMS -->
+<article class="scenario-item w-full bg-surface-container-lowest rounded-2xl p-space-md shadow-sm flex flex-col gap-space-sm active:scale-[0.99] transition-all" data-category="sms">
+<div class="flex items-center justify-between gap-2">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-extrabold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">task_alt</span>
+<span>EASY • आसान</span>
+</span>
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface font-bold tracking-wide">
+            SMS ALERT
+          </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-semibold">~2 mins</span>
+</div>
+<div class="flex items-start gap-space-sm">
+<div class="w-12 h-12 rounded-xl bg-primary-fixed text-on-primary-fixed shrink-0 flex items-center justify-center mt-0.5">
+<span class="material-symbols-outlined text-[24px]">power_off</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface leading-snug">
+            Electricity Cutoff at 9:30 PM
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+            Urgent SMS saying power will be disconnected in 2 hours for pending ₹120. Tells you to call an unofficial mobile number.
+          </p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-primary text-[18px]">link</span>
+<span>Fake Utility Link</span>
+</div>
+<button class="min-h-[44px] px-4 rounded-xl bg-primary text-on-primary font-label-md text-label-md font-bold flex items-center gap-1 active:scale-95 transition-transform shadow-sm" onclick="startScenario('bijli-cutoff')" type="button">
+<span>अभ्यास शुरू करें</span>
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+</button>
+</div>
+</article>
+<!-- 4. Hospital Emergency from Son -->
+<article class="scenario-item w-full bg-surface-container-lowest rounded-2xl p-space-md shadow-sm flex flex-col gap-space-sm active:scale-[0.99] transition-all" data-category="message">
+<div class="flex items-center justify-between gap-2">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded-full bg-error-container text-on-error-container font-extrabold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">emergency</span>
+<span>HARD • कठिन</span>
+</span>
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface font-bold tracking-wide">
+            WHATSAPP AUDIO
+          </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-semibold">~4 mins</span>
+</div>
+<div class="flex items-start gap-space-sm">
+<div class="w-12 h-12 rounded-xl bg-tertiary-container text-on-tertiary shrink-0 flex items-center justify-center mt-0.5">
+<span class="material-symbols-outlined text-[24px]">medical_services</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface leading-snug">
+            Hospital Emergency from Son
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+            AI-generated voice crying on WhatsApp claims road accident. Doctor urgently demands ₹25,000 via UPI QR code.
+          </p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-tertiary text-[18px]" style="font-variation-settings: 'FILL' 1;">record_voice_over</span>
+<span>Emotional AI Impersonation</span>
+</div>
+<button class="min-h-[44px] px-4 rounded-xl bg-primary text-on-primary font-label-md text-label-md font-bold flex items-center gap-1 active:scale-95 transition-transform shadow-sm" onclick="startScenario('hospital-son')" type="button">
+<span>अभ्यास शुरू करें</span>
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+</button>
+</div>
+</article>
+</div>
+<!-- Educational Reassurance Card with Visual Accent -->
+<div class="w-full bg-surface-container rounded-2xl p-space-md flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-primary flex items-center justify-center shrink-0 text-on-primary">
+<span class="material-symbols-outlined text-[26px]">volunteer_activism</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">Sumati सुरक्षा नियम याद रखें:</span>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        1. OTP कभी न बताएं • 2. जल्दबाजी न करें • 3. बच्चे या 1930 से पूछें
+      </p>
+</div>
+</div>
+<!-- Sticky Tactical Bottom Action Station -->
+<div class="sticky bottom-2 inset-x-0 z-40 pt-2">
+<div class="w-full bg-surface/95 backdrop-blur-md rounded-2xl p-2.5 shadow-lg flex flex-col gap-2">
+<!-- Ask AI Scam Checker Trigger -->
+<button class="w-full min-h-[56px] px-space-md rounded-xl bg-secondary-container text-on-secondary-container font-label-lg text-label-lg font-bold flex items-center justify-between shadow-sm active:scale-[0.99] transition-transform" onclick="openAiChecker()" type="button">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[26px] text-on-secondary-container" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span>⚡ Ask AI Scam Checker (शक है? जांचें)</span>
+</div>
+<span class="material-symbols-outlined text-[22px]">arrow_forward</span>
+</button>
+<!-- Emergency Helpline Trigger (1930) -->
+<button class="w-full min-h-[56px] px-space-md rounded-xl bg-tertiary text-on-tertiary font-label-lg text-label-lg font-bold flex items-center justify-between shadow-sm active:scale-[0.99] transition-transform" onclick="triggerEmergencyModal()" type="button">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[26px] text-on-tertiary" style="font-variation-settings: 'FILL' 1;">emergency_home</span>
+<span>🚨 Emergency Checklist • तुरंत 1930 कॉल</span>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container-lowest text-tertiary px-2.5 py-1 rounded-full font-extrabold uppercase shadow-sm">
+          FREE 24x7
+        </span>
+</button>
+</div>
+</div>
+<!-- Toast Notification / Quick Simulation Dialogue -->
+<div class="fixed inset-x-4 top-24 z-50 bg-inverse-surface text-inverse-on-surface p-space-md rounded-2xl shadow-xl transform -translate-y-32 opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-space-sm" id="toast-modal">
+<span class="material-symbols-outlined text-inverse-primary text-[28px] shrink-0" id="toast-icon">verified</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-lg text-label-lg font-bold" id="toast-title">Practice Initialized</span>
+<span class="font-body-md text-body-md opacity-90 truncate" id="toast-desc">सुरक्षित अभ्यास शुरू हो रहा है...</span>
+</div>
+</div>
+</div>
+<script>
+  function selectLanguage(btn, langCode) {
+    document.querySelectorAll('.lang-pill').forEach(b => {
+      b.className = 'lang-pill min-h-[44px] rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md font-bold flex items-center justify-center gap-1 shadow-sm transition-all';
+      const check = b.querySelector('.material-symbols-outlined');
+      if (check) check.remove();
+    });
+
+    btn.className = 'lang-pill min-h-[44px] rounded-lg bg-primary text-on-primary font-label-md text-label-md font-bold flex items-center justify-center gap-1 shadow-sm transition-all';
+    const checkIcon = document.createElement('span');
+    checkIcon.className = 'material-symbols-outlined text-[16px] text-on-primary';
+    checkIcon.innerText = 'check';
+    btn.prepend(checkIcon);
+
+    showToast('Language Changed / भाषा बदली', langCode === 'hi' ? 'हिंदी मोड सक्रिय हो गया है' : langCode === 'mr' ? 'मराठी मोड सुरू केला आहे' : 'English mode activated');
+  }
+
+  function filterScams(category, btn) {
+    document.querySelectorAll('.filter-pill').forEach(b => {
+      b.className = 'filter-pill min-h-[44px] px-4 rounded-full bg-surface-container text-on-surface font-label-md text-label-md font-bold shrink-0 flex items-center gap-1';
+      const check = b.querySelector('.material-symbols-outlined');
+      if (check) check.remove();
+    });
+
+    btn.className = 'filter-pill min-h-[44px] px-4 rounded-full bg-primary text-on-primary font-label-md text-label-md font-bold shrink-0 flex items-center gap-1 shadow-sm';
+    const checkIcon = document.createElement('span');
+    checkIcon.className = 'material-symbols-outlined text-[16px]';
+    checkIcon.innerText = 'check';
+    btn.prepend(checkIcon);
+
+    const items = document.querySelectorAll('.scenario-item');
+    items.forEach(item => {
+      if (category === 'all' || item.dataset.category === category) {
+        item.style.display = 'flex';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  function startModality(mode) {
+    const names = {
+      call: '📞 Simulated Scam Call (नकली कॉल)',
+      message: '💬 WhatsApp/SMS Triage (मैसेज सुरक्षा)',
+      website: '🌐 Phishing Link Inspector (फर्जी साइट)'
+    };
+    showToast('Starting Practice Session', names[mode] || 'Safe Practice Loaded');
+  }
+
+  function startScenario(id) {
+    showToast('अभ्यास शुरू! (Safe Sandbox)', 'यह केवल अभ्यास है। कभी भी OTP न दें।');
+  }
+
+  function openAiChecker() {
+    showToast('AI जासूस खुल रहा है...', 'संदिग्ध संदेश पेस्ट करें या स्क्रीनशॉट दिखाएं।');
+  }
+
+  function triggerEmergencyModal() {
+    showToast('हेल्पलाइन 1930 इमरजेंसी', 'राष्ट्रीय साइबर अपराध रिपोर्टिंग पोर्टल से कनेक्ट हो रहा है...');
+  }
+
+  let toastTimeout;
+  function showToast(title, desc) {
+    const toast = document.getElementById('toast-modal');
+    const tTitle = document.getElementById('toast-title');
+    const tDesc = document.getElementById('toast-desc');
+    
+    tTitle.innerText = title;
+    tDesc.innerText = desc;
+
+    clearTimeout(toastTimeout);
+    toast.classList.remove('-translate-y-32', 'opacity-0', 'pointer-events-none');
+    toast.classList.add('translate-y-0', 'opacity-100');
+
+    toastTimeout = setTimeout(() => {
+      toast.classList.add('-translate-y-32', 'opacity-0', 'pointer-events-none');
+      toast.classList.remove('translate-y-0', 'opacity-100');
+    }, 2800);
+  }
+</script></main><nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/95 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.05)]" data-active-classes="text-primary font-bold"><div class="flex justify-around items-center h-20 px-2"><a aria-current="page" class="flex flex-col items-center justify-center min-w-[64px] min-h-[56px] transition-colors text-primary font-bold" data-path="suraksha-home" href="#"><span class="material-symbols-outlined text-[26px]">shield</span><span class="font-label-md text-label-md mt-0.5">सुरक्षा Home</span></a><a class="flex flex-col items-center justify-center min-w-[64px] min-h-[56px] text-on-surface-variant transition-colors" data-path="scam-simulator" href="#"><span class="material-symbols-outlined text-[26px]">school</span><span class="font-label-md text-label-md mt-0.5">अभ्यास Train</span></a><a class="flex flex-col items-center justify-center min-w-[64px] min-h-[56px] text-on-surface-variant transition-colors" data-path="ai-scam-checker" href="#"><span class="material-symbols-outlined text-[26px]">smart_toy</span><span class="font-label-md text-label-md mt-0.5">AI जासूस</span></a><a class="flex flex-col items-center justify-center min-w-[64px] min-h-[56px] text-on-surface-variant transition-colors" data-path="emergency-helpline" href="#"><span class="material-symbols-outlined text-tertiary text-[26px]">call</span><span class="font-label-md text-label-md text-tertiary mt-0.5">मदद 1930</span></a><a class="flex flex-col items-center justify-center min-w-[64px] min-h-[56px] text-on-surface-variant transition-colors" data-path="senior-profile" href="#"><span class="material-symbols-outlined text-[26px]">account_circle</span><span class="font-label-md text-label-md mt-0.5">प्रोफ़ाइल</span></a></div></nav></body></html>

@@ -20,6 +20,11 @@ class UiStrings {
       'easy': 'EASY',
       'medium': 'MEDIUM',
       'hard': 'HARD',
+      'start_practice': 'Start Practice',
+      'suraksha_subtitle': 'Suraksha Home • Safe Companion',
+      'listen_aloud': 'Listen Aloud',
+      'tap_to_reply': 'Suggested Replies (Tap to send)',
+      'safe_practice_help': 'This is a 100% safe practice space. No real money, real bank accounts, or real phone calls are ever used.',
 
       // Practice Tag Banner
       'practice_banner': 'PRACTICE – NOT REAL',
@@ -151,6 +156,11 @@ class UiStrings {
       'easy': 'सरल',
       'medium': 'मध्यम',
       'hard': 'कठिन',
+      'start_practice': 'अभ्यास शुरू करें',
+      'suraksha_subtitle': 'सुरक्षा होम • सुरक्षित साथी',
+      'listen_aloud': 'बोलकर सुनें',
+      'tap_to_reply': 'सुझाए गए उत्तर (भेजने के लिए दबाएं)',
+      'safe_practice_help': 'यह 100% सुरक्षित अभ्यास का मंच है। यहाँ कोई असली पैसे, बैंक खाता या असली कॉल का उपयोग नहीं होता।',
 
       // Practice Tag Banner
       'practice_banner': 'अभ्यास – असली नहीं',
@@ -281,6 +291,11 @@ class UiStrings {
       'easy': 'सोपे',
       'medium': 'मध्यम',
       'hard': 'कठीण',
+      'start_practice': 'सराव सुरू करा',
+      'suraksha_subtitle': 'सुरक्षा होम • सुरक्षित सोबती',
+      'listen_aloud': 'ऐकून घ्या',
+      'tap_to_reply': 'सुचवलेले प्रतिसाद (पाठवण्यासाठी दाबा)',
+      'safe_practice_help': 'हे १००% सुरक्षित सरावाचे ठिकाण आहे. येथे कोणतेही खरे पैसे, बँक खाती किंवा खरे फोन कॉल्स वापरले जात नाहीत.',
 
       // Practice Tag Banner
       'practice_banner': 'सराव – खरे नाही',

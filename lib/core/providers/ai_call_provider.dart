@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:audioplayers/audioplayers.dart';
+import '../config/app_config.dart';
+import '../services/realistic_voice_service.dart';
 import 'tts_provider.dart';
 
 class AiCallState {
@@ -36,15 +39,20 @@ class AiCallState {
 class AiCallNotifier extends AutoDisposeNotifier<AiCallState> {
   WebSocketChannel? _channel;
   final AudioPlayer _audioPlayer = AudioPlayer();
+  StreamSubscription<PlayerState>? _playerStateSub;
+  StreamSubscription? _wsSub;
 
   @override
   AiCallState build() {
-    _audioPlayer.onPlayerStateChanged.listen((playerState) {
+    _playerStateSub?.cancel();
+    _playerStateSub = _audioPlayer.onPlayerStateChanged.listen((playerState) {
       final isPlaying = playerState == PlayerState.playing;
       state = state.copyWith(isSpeaking: isPlaying);
     });
 
     ref.onDispose(() {
+      _wsSub?.cancel();
+      _playerStateSub?.cancel();
       _channel?.sink.close();
       _audioPlayer.stop();
       _audioPlayer.dispose();
@@ -54,12 +62,13 @@ class AiCallNotifier extends AutoDisposeNotifier<AiCallState> {
   }
 
   void connect(String persona, String initialMessage) {
+    _wsSub?.cancel();
     _channel?.sink.close();
     _audioPlayer.stop();
 
     final encodedPersona = Uri.encodeComponent(persona);
     final encodedMsg = Uri.encodeComponent(initialMessage);
-    final wsUrl = Uri.parse('ws://127.0.0.1:8000/ws/chat?persona=$encodedPersona&initial_message=$encodedMsg');
+    final wsUrl = Uri.parse('${AppConfig.wsBaseUrl}/ws/chat?persona=$encodedPersona&initial_message=$encodedMsg');
     
     debugPrint("[AiCallProvider] Connecting to $wsUrl");
     _channel = WebSocketChannel.connect(wsUrl);
@@ -70,7 +79,7 @@ class AiCallNotifier extends AutoDisposeNotifier<AiCallState> {
       isSpeaking: true,
     );
 
-    _channel!.stream.listen(
+    _wsSub = _channel!.stream.listen(
       (message) async {
         try {
           final data = jsonDecode(message as String);
@@ -94,11 +103,11 @@ class AiCallNotifier extends AutoDisposeNotifier<AiCallState> {
               await _audioPlayer.play(BytesSource(audioBytes));
             } catch (playErr) {
               debugPrint("[AiCallProvider] Audio playback error: $playErr");
-              ref.read(ttsProvider).speak(reply);
+              ref.read(realisticVoiceProvider).speakRealistic(reply, 'hi');
             }
           } else if (reply.isNotEmpty) {
-            // Fallback to local TTS if audio_b64 is missing
-            ref.read(ttsProvider).speak(reply);
+            // Fallback to Edge-TTS service
+            ref.read(realisticVoiceProvider).speakRealistic(reply, 'hi');
           }
         } catch (e) {
           debugPrint("[AiCallProvider] JSON Parsing Error: $e");

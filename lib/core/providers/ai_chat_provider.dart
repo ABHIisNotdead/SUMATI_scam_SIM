@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
+import '../config/app_config.dart';
 
 // 1. Define the Message Model
 class ChatMessage {
@@ -41,23 +43,29 @@ class AiChatState {
 // 3. The Provider Notifier
 class AiChatNotifier extends AutoDisposeNotifier<AiChatState> {
   WebSocketChannel? _channel;
+  StreamSubscription? _streamSub;
 
   @override
   AiChatState build() {
     ref.onDispose(() {
+      _streamSub?.cancel();
       _channel?.sink.close();
     });
     return AiChatState(messages: []);
   }
 
-  void connect(String persona, String initialMessage) {
+  void connect(String persona, String initialMessage, {String lang = 'en'}) {
+    // Cancel any previous connection and subscription before opening a new one
+    _streamSub?.cancel();
+    _channel?.sink.close();
+
     final encodedPersona = Uri.encodeComponent(persona);
     final encodedMsg = Uri.encodeComponent(initialMessage);
-    final wsUrl = Uri.parse('ws://127.0.0.1:8000/ws/chat?persona=$encodedPersona&initial_message=$encodedMsg');
+    final wsUrl = Uri.parse('${AppConfig.wsBaseUrl}/ws/chat?persona=$encodedPersona&initial_message=$encodedMsg&lang=$lang');
     
     _channel = WebSocketChannel.connect(wsUrl);
 
-    _channel!.stream.listen(
+    _streamSub = _channel!.stream.listen(
       (message) {
         try {
           final data = jsonDecode(message.toString());
@@ -88,8 +96,20 @@ class AiChatNotifier extends AutoDisposeNotifier<AiChatState> {
         );
       },
       onError: (error) {
+        final errorText = lang == 'hi'
+            ? "कनेक्शन टूट गया। कृपया जांचें कि बैकएंड चल रहा है।"
+            : (lang == 'mr'
+                ? "कनेक्शन गमावले. कृपया बॅकएंड चालू असल्याची खात्री करा."
+                : "Connection lost. Please make sure backend is running.");
+        final fallbackSuggestions = lang == 'hi'
+            ? ["आप कौन हैं?", "मुझे पहले इसकी पुष्टि करनी होगी।", "ठीक है, भुगतान कैसे करूँ?"]
+            : (lang == 'mr'
+                ? ["तुम्ही कोण आहात?", "मला आधी हे तपासावे लागेल.", "ठीक आहे, पैसे कसे भरायचे?"]
+                : ["Who is this?", "I need to verify this first.", "Okay, how do I pay?"]);
+
         state = state.copyWith(
-          messages: [...state.messages, ChatMessage(text: "Connection lost. Please make sure backend is running.", isUser: false)],
+          messages: [...state.messages, ChatMessage(text: errorText, isUser: false)],
+          suggestions: fallbackSuggestions,
         );
       },
     );
