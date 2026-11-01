@@ -1,4 +1,5 @@
 import os
+import random
 import sqlite3
 from contextlib import contextmanager
 from datetime import datetime
@@ -82,7 +83,7 @@ def init_db():
         conn.commit()
 
 # ── User Sync & Lookup ──────────────────────────────────────────────
-def sync_user(phone: str, name: str, pin: str = "1234", safety_score: int = 100, total_drills: int = 0, avoided_drills: int = 0) -> Dict[str, Any]:
+def sync_user(phone: str, name: str, pin: Optional[str] = None, safety_score: int = 100, total_drills: int = 0, avoided_drills: int = 0) -> Dict[str, Any]:
     with get_db() as conn:
         cursor = conn.cursor()
         now = datetime.utcnow().isoformat()
@@ -91,17 +92,18 @@ def sync_user(phone: str, name: str, pin: str = "1234", safety_score: int = 100,
         existing = cursor.fetchone()
         
         if existing:
-            effective_pin = pin if pin and pin.strip() else existing["pin"]
+            effective_pin = pin.strip() if (pin and pin.strip()) else existing["pin"]
             cursor.execute("""
                 UPDATE users 
                 SET name = ?, pin = ?, safety_score = ?, total_drills = ?, avoided_drills = ?, last_active = ?
                 WHERE phone_number = ?
             """, (name, effective_pin, safety_score, total_drills, avoided_drills, now, phone))
         else:
+            effective_pin = pin.strip() if (pin and pin.strip()) else str(random.randint(1000, 9999))
             cursor.execute("""
                 INSERT INTO users (phone_number, name, role, pin, safety_score, total_drills, avoided_drills, last_active, created_at)
                 VALUES (?, ?, 'senior', ?, ?, ?, ?, ?, ?)
-            """, (phone, name, pin, safety_score, total_drills, avoided_drills, now, now))
+            """, (phone, name, effective_pin, safety_score, total_drills, avoided_drills, now, now))
             
         conn.commit()
         
@@ -225,7 +227,7 @@ def record_drill(user_phone: str, scenario_title: str, channel: str, status: str
         
         cursor.execute("""
             SELECT COUNT(*) as total, 
-                   SUM(CASE WHEN status = 'deflected' OR status = 'avoided' THEN 1 ELSE 0 END) as avoided
+                   SUM(CASE WHEN status = 'deflected' OR status = 'avoided' OR status LIKE 'success%' THEN 1 ELSE 0 END) as avoided
             FROM drill_activity WHERE user_phone = ?
         """, (user_phone,))
         stat = cursor.fetchone()
@@ -240,3 +242,49 @@ def record_drill(user_phone: str, scenario_title: str, channel: str, status: str
         """, (total, avoided, score, now, user_phone))
         
         conn.commit()
+
+def batch_sync_drills(user_phone: str, drills: List[Dict[str, Any]]) -> int:
+    if not user_phone or not drills:
+        return 0
+    with get_db() as conn:
+        cursor = conn.cursor()
+        now = datetime.utcnow().isoformat()
+        synced_count = 0
+        
+        for drill in drills:
+            title = drill.get("scenario_title") or drill.get("scenarioTitle") or "Simulation Drill"
+            channel = drill.get("channel") or "call"
+            status = drill.get("status") or "deflected"
+            timestamp = drill.get("timestamp") or now
+            
+            # Check if this exact record is already logged
+            cursor.execute("""
+                SELECT id FROM drill_activity 
+                WHERE user_phone = ? AND scenario_title = ? AND timestamp = ?
+            """, (user_phone, title, timestamp))
+            if not cursor.fetchone():
+                cursor.execute("""
+                    INSERT INTO drill_activity (user_phone, scenario_title, channel, status, timestamp)
+                    VALUES (?, ?, ?, ?, ?)
+                """, (user_phone, title, channel, status, timestamp))
+                synced_count += 1
+                
+        # Recompute totals and update user stats
+        cursor.execute("""
+            SELECT COUNT(*) as total, 
+                   SUM(CASE WHEN status = 'deflected' OR status = 'avoided' OR status LIKE 'success%' THEN 1 ELSE 0 END) as avoided
+            FROM drill_activity WHERE user_phone = ?
+        """, (user_phone,))
+        stat = cursor.fetchone()
+        total = stat["total"] or 0
+        avoided = stat["avoided"] or 0
+        score = int((avoided / total) * 100) if total > 0 else 100
+        
+        cursor.execute("""
+            UPDATE users 
+            SET total_drills = ?, avoided_drills = ?, safety_score = ?, last_active = ?
+            WHERE phone_number = ?
+        """, (total, avoided, score, now, user_phone))
+        
+        conn.commit()
+        return synced_count

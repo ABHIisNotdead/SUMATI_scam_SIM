@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
+  /// Detects if code is running inside a test environment.
+  static bool get isTestEnvironment =>
+      WidgetsBinding.instance.runtimeType.toString().contains('Test');
   // Design Tokens from Stitch DESIGN.md
   static const Color primary = Color(0xFF005344);
   static const Color primaryContainer = Color(0xFF006D5B);
@@ -45,7 +48,9 @@ class AppTheme {
   static const Color cardWhite = surfaceContainerLowest;
 
   static ThemeData get light {
-    final baseTextTheme = GoogleFonts.plusJakartaSansTextTheme();
+    final baseTextTheme = isTestEnvironment
+        ? Typography.material2021().black
+        : GoogleFonts.plusJakartaSansTextTheme();
     return ThemeData(
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(

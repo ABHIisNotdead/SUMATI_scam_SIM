@@ -55,10 +55,12 @@ class _AskAiScreenState extends ConsumerState<AskAiScreen> {
   Uint8List? _uploadedImageBytes;
   String? _uploadedImageName;
   ScamVerdict? _verdict;
+  RealisticVoiceService? _voiceService;
 
   @override
   void initState() {
     super.initState();
+    _voiceService = ref.read(realisticVoiceProvider);
     _initSpeech();
   }
 
@@ -81,8 +83,10 @@ class _AskAiScreenState extends ConsumerState<AskAiScreen> {
   @override
   void dispose() {
     _textController.dispose();
-    _speech.stop();
-    ref.read(realisticVoiceProvider).stop();
+    if (_speech.isListening) {
+      _speech.stop();
+    }
+    _voiceService?.stop();
     super.dispose();
   }
 

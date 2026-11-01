@@ -1,0 +1,410 @@
+[
+  {
+    "id": "whatsapp_family_emergency",
+    "title": "Hospital Emergency from Son",
+    "channel": "whatsapp",
+    "difficulty": "medium",
+    "scammer_name": "Unknown Number (Son/Daughter)",
+    "persona": "a desperate son or daughter who lost their phone, calling from an unknown number at a hospital, desperately asking their elderly parent to send emergency money via GPay/UPI",
+    "goal": "manipulate emotional panic so the senior transfers 5,000 rupees immediately without checking",
+    "initial_message": "Mom/Dad it's me. My phone broke and I am at the hospital after an accident. Please GPay 5000 rupees urgently to this hospital pharmacy number.",
+    "debrief_success": "Wonderful! You refused to send money blindly. Always call your child directly on their known regular phone number before reacting to emergency requests.",
+    "debrief_failure": "You agreed to send money! Scammers frequently impersonate distressed family members from unknown numbers. Always verify by calling their known number.",
+    "psychological_tricks": [
+      "Parental Panic: Exploiting parental love and fear of physical harm to a child.",
+      "Manufactured Crisis: Staging an urgent medical emergency with no time to think.",
+      "Cover Story for Unknown Number: Claiming personal phone was lost or damaged in the accident."
+    ],
+    "tactics_explanation": "Scammers exploit the deep emotional bond between parents and children. By triggering intense emotional panic ('I met with an accident and need ₹5,000 for emergency surgery right now'), they eliminate the senior's hesitation to transfer funds. They give plausible excuses for using a stranger's phone or pharmacy UPI account.",
+    "red_flags": [
+      "Message or voice note from an unknown phone number claiming to be your child or grandchild.",
+      "Extreme emotional urgency demanding immediate UPI/GPay payment to a medical or pharmacy shop.",
+      "Excuses as to why they cannot speak clearly or turn on video call."
+    ],
+    "dos": [
+      "Call your child directly on their known, regular phone number before doing anything.",
+      "If they do not answer, call their spouse, workplace, or a close friend to verify their whereabouts.",
+      "Ask a personal security question that only your real family member would know."
+    ],
+    "donts": [
+      "Never transfer money immediately out of panic to unverified numbers.",
+      "Never trust audio notes blindly, as AI voice cloning can imitate family voices.",
+      "Never keep emergency money requests secret from other family members."
+    ],
+    "audio_script_template": "Well done! You defended against this emergency scam. Real scammers use fabricated hospital emergencies to cause panic. Always call your child on their known number to verify."
+  },
+  {
+    "id": "whatsapp_police_bribe",
+    "title": "Police Digital Arrest Warrant",
+    "channel": "whatsapp",
+    "difficulty": "hard",
+    "scammer_name": "Inspector Patil (Cyber Crime)",
+    "persona": "a harsh, authoritative police officer Inspector Patil claiming the user's child is arrested in a criminal case and demanding an immediate bribe to avoid an FIR",
+    "goal": "intimidate the parent into sending 10,000 rupees bribe via UPI to avoid an arrest",
+    "initial_message": "Hello, this is Inspector Patil from Crime Branch. Your son is in our custody for a serious crime. Transfer 10,000 rupees now if you want to settle this without an FIR.",
+    "debrief_success": "Excellent defense! Real police officers NEVER settle cases over WhatsApp or demand UPI transfers to drop charges.",
+    "debrief_failure": "You agreed to pay! This is a classic 'Digital Arrest' scam. Law enforcement never asks for online payments to release detainees.",
+    "psychological_tricks": [
+      "Authoritarian Intimidation: Impersonating law enforcement with aggressive, stern legal vocabulary.",
+      "Social Stigma & Shame: Threatening that family honor will be ruined if an FIR is officially registered.",
+      "Time-Pressure Extortion: Forcing immediate settlement within 15 minutes before superiors take over."
+    ],
+    "tactics_explanation": "Criminals impersonate police officers claiming your relative is detained in a high-profile raid. They demand immediate cash or UPI bribes to drop charges before media arrival. Indian police never settle cases over chat apps or ask for personal UPI transfers.",
+    "red_flags": [
+      "Demands for UPI or digital wallet payments to avoid criminal charges or FIRs.",
+      "Sending forged arrest notices, police summons, or FIR documents via WhatsApp.",
+      "Threatening that media or neighbors will find out if payment is delayed."
+    ],
+    "dos": [
+      "Immediately call the family member who is allegedly detained.",
+      "Contact your local police station or dial 112 to verify any alleged FIR.",
+      "Report extortion threats directly to the 1930 Cyber Crime Helpline."
+    ],
+    "donts": [
+      "Never send money or bribes via UPI to alleged police personnel.",
+      "Never trust official FIRs or arrest warrants sent over WhatsApp or Telegram.",
+      "Never delete extortion chat messages, as they are essential forensic evidence."
+    ],
+    "audio_script_template": "Well done! You stood strong against police extortion. Real police officers never negotiate FIRs over WhatsApp or demand money transfers. Always report extortion to 1930."
+  },
+  {
+    "id": "whatsapp_electricity",
+    "title": "Electricity Bill Cutoff Threat",
+    "channel": "whatsapp",
+    "difficulty": "easy",
+    "scammer_name": "Power Board Officer",
+    "persona": "an electricity department officer claiming an unpaid bill will lead to immediate power disconnection tonight",
+    "goal": "trick the user into paying a fake bill or clicking an APK update link",
+    "initial_message": "Dear consumer, your electricity power will be disconnected tonight at 9:30 PM due to pending bill of ₹1,450. Call this officer number immediately to clear your dues.",
+    "debrief_success": "Great job! Electricity boards never send disconnection threats from personal numbers asking for direct transfers.",
+    "debrief_failure": "You agreed to pay! Electricity companies follow formal billing procedures with notice periods, never urgent cutoff threats over WhatsApp.",
+    "psychological_tricks": [
+      "Urgent Deprivation: Threatening to shut off essential residential power tonight at 9:30 PM.",
+      "Low Dollar Anchor: Asking for a modest ₹1,450 so victims pay immediately without second thought.",
+      "Pretexting Authority: Posing as a busy utility officer doing a favor by alerting before cutoff."
+    ],
+    "tactics_explanation": "Fraudsters send bulk messages claiming an unpaid electricity bill will trigger immediate power cutoff tonight. When the panicked victim calls the contact number, the scammer instructs them to download a 'bill verification APK' or pay via a phishing link, draining their account.",
+    "red_flags": [
+      "Disconnection warning sent from a personal 10-digit mobile number rather than an official utility SMS header.",
+      "Arbitrary immediate deadline like 'tonight at 9:30 PM'.",
+      "Directions to call a personal mobile number or download an APK/app to update the power meter."
+    ],
+    "dos": [
+      "Check your physical electricity bill or official utility mobile app (e.g., BESCOM, Mahavitaran, TPDDL).",
+      "Pay bills exclusively through authorized government portals or electricity board offices.",
+      "Block and report the fraudulent WhatsApp sender as spam."
+    ],
+    "donts": [
+      "Never call the phone number provided in the disconnection warning message.",
+      "Never install any APK or application sent via WhatsApp to 'update your meter'.",
+      "Never make UPI transfers to personal numbers for utility bills."
+    ],
+    "audio_script_template": "Well done! You correctly identified the electricity cutoff scam. Electricity boards never issue sudden cutoff threats on personal phone numbers. Always verify bills via official utility apps."
+  },
+  {
+    "id": "whatsapp_lottery",
+    "title": "KBC / WhatsApp Mega Lottery",
+    "channel": "whatsapp",
+    "difficulty": "easy",
+    "scammer_name": "Prize Manager Rana",
+    "persona": "a lottery agent congratulating the user for winning a 25 Lakh rupee lucky draw prize, asking for a small processing fee",
+    "goal": "trick user into paying a ₹2,500 'processing and tax' fee to release the prize",
+    "initial_message": "Congratulations! Your mobile number won 25 Lakh Rupees in the All-India Lucky Draw. To receive your cheque, pay ₹2,500 government tax fee.",
+    "debrief_success": "Smart! You can never win a lottery you didn't buy a ticket for. Real lotteries never ask for upfront taxes to claim prizes.",
+    "debrief_failure": "You agreed to pay the processing fee! In lottery scams, any advance fee you send is stolen and no prize ever arrives.",
+    "psychological_tricks": [
+      "Greed & Windfall Excitement: Dangling ₹25 Lakhs to overwhelm financial caution.",
+      "Advance Fee Asymmetry: Demanding a tiny fraction (₹2,500) so the victim perceives low risk for high reward.",
+      "Legitimacy Embellishment: Using national broadcaster logos, fake cheques, and official-sounding government tax claims."
+    ],
+    "tactics_explanation": "Scammers send forged lottery certificates bearing national broadcaster logos or official stamps. Once the victim pays the initial processing fee, scammers invent further clearance fees (GST, RBI clearance, foreign exchange fee) until the victim realizes nothing will ever be paid out.",
+    "red_flags": [
+      "Winning a prize or lucky draw that you never purchased a ticket or entered into.",
+      "Demands for upfront 'tax', 'GST', or 'processing fees' to release funds.",
+      "Use of low-quality audio recordings or WhatsApp voice notes claiming to be famous television anchors."
+    ],
+    "dos": [
+      "Delete and block the message immediately.",
+      "Remember the golden rule: You cannot win a lottery or prize you never entered.",
+      "Warn friends and family who might receive identical lottery messages."
+    ],
+    "donts": [
+      "Never pay advance fees, registration charges, or taxes to claim winnings.",
+      "Never share your bank account, Aadhaar, or PAN details to receive prize money.",
+      "Never click links or open attachments in unsolicited lottery announcements."
+    ],
+    "audio_script_template": "Well done! You avoided the lottery trap. Remember, legitimate lotteries never ask for advance fees to release prizes, and you cannot win a contest you never entered."
+  },
+  {
+    "id": "call_bank_kyc",
+    "title": "Bank Account KYC & OTP Call",
+    "channel": "call",
+    "difficulty": "easy",
+    "scammer_name": "Metro Trust Bank Manager",
+    "persona": "a polite, formal bank verification officer warning that the user's ATM card and account will be frozen today unless they verify an OTP",
+    "goal": "trick the senior into reading out their 6-digit one-time password (OTP)",
+    "initial_message": "Hello, I am calling from your bank head office. Your account KYC has expired. Read the 6-digit code sent to your SMS to prevent card blocking.",
+    "debrief_success": "Perfect! Banks never ask for OTPs or PINs over phone calls. By refusing, your funds stayed safe.",
+    "debrief_failure": "You shared your OTP! Sharing an OTP gives scammers direct access to withdraw money from your bank account.",
+    "psychological_tricks": [
+      "Panic of Inconvenience: Threatening that pension or debit cards will be blocked within hours.",
+      "Helpful Impersonation: Posing as a courteous bank customer manager trying to 'save' the customer from account freezing.",
+      "Misdirection: Framing the 6-digit OTP as an 'account verification number' rather than an authorization code."
+    ],
+    "tactics_explanation": "Fraudsters exploit the fear of losing access to savings and pensions. By manufacturing an urgent deadline ('account expires today at 5 PM'), they bypass logical skepticism and convince the victim to read out their one-time password or install remote access software.",
+    "red_flags": [
+      "Caller insists on knowing an OTP received on your mobile phone.",
+      "Threat of immediate bank account suspension or ATM card blocking.",
+      "Calling from a standard 10-digit mobile number while claiming to represent bank headquarters."
+    ],
+    "dos": [
+      "Disconnect the call and visit your local bank branch directly.",
+      "Call the official customer care number printed on the back of your debit card.",
+      "Check your SMS wording carefully — banks always explicitly state 'Do not share this OTP with anyone'."
+    ],
+    "donts": [
+      "Never share your 6-digit OTP, MPIN, or debit card CVV with anyone, even if they claim to be a bank manager.",
+      "Never download screen-sharing tools (AnyDesk, RustDesk) requested by callers.",
+      "Never assume caller ID displays are authentic, as scam syndicates use caller ID spoofing."
+    ],
+    "audio_script_template": "Well done! You guarded your bank details. Real banks will never call you to ask for your secret OTP or password. Always hang up and visit your branch if in doubt."
+  },
+  {
+    "id": "call_digital_arrest",
+    "title": "CBI Officer Video Arrest Call",
+    "channel": "call",
+    "difficulty": "hard",
+    "scammer_name": "CBI Officer Sharma",
+    "persona": "a strict CBI investigator claiming a parcel sent under the senior's Aadhaar card contains illegal narcotics and money laundering funds",
+    "goal": "keep the senior on the line, isolate them from family, and demand asset verification deposits",
+    "initial_message": "This is Officer Sharma from CBI Mumbai. A package with 5 passports and illegal drugs was seized under your Aadhaar number. You are under digital arrest.",
+    "debrief_success": "Outstanding courage! Police and CBI never conduct arrests over phone calls or demand secret deposits.",
+    "debrief_failure": "You panicked and stayed on the call! CBI never calls to demand money or declare digital arrests over the phone.",
+    "psychological_tricks": [
+      "Fabricated Authority: Impersonating CBI/Police officials with fake uniforms and official-sounding legal jargon.",
+      "Isolation & Secrecy: Forbidding the victim from speaking to family or disconnecting under threat of immediate arrest.",
+      "Manufactured Crime: Accusing the senior of severe offenses (drugs, money laundering) using their leaked Aadhaar number."
+    ],
+    "tactics_explanation": "Scammers leverage acute legal fear and social panic. They falsely claim an illegal parcel was registered in your name and order you to undergo continuous video surveillance ('digital arrest') while demanding funds be deposited into 'RBI verification accounts'. In reality, Indian law has no provision for arrest over video call.",
+    "red_flags": [
+      "Threat of immediate arrest over a phone or video call.",
+      "Demanding that you stay locked in a room without hanging up.",
+      "Demanding money transfer to 'clear your name' or for 'asset verification'."
+    ],
+    "dos": [
+      "Hang up immediately — digital arrest does not legally exist in India.",
+      "Report the number to the 1930 Cyber Crime Helpline or National Cyber Crime Reporting Portal (cybercrime.gov.in).",
+      "Discuss the call openly with family members or friends."
+    ],
+    "donts": [
+      "Never transfer funds to any 'police clearance' or 'court escrow' account.",
+      "Never join Skype or WhatsApp video calls with alleged officers.",
+      "Never share copies of your Aadhaar card or bank passbook over chat."
+    ],
+    "audio_script_template": "Well done! You defeated the digital arrest scam. Indian law does not have any concept of digital arrest over video calls. Police will never demand online transfers to clear your name."
+  },
+  {
+    "id": "call_tech_support",
+    "title": "Microsoft PC Hacking Support",
+    "channel": "call",
+    "difficulty": "medium",
+    "scammer_name": "Windows Support Engineer",
+    "persona": "a fast-talking computer technician claiming dangerous hackers have invaded the senior's device and demanding remote access",
+    "goal": "trick user into installing screen-sharing tools like AnyDesk or TeamViewer",
+    "initial_message": "Hello, this is Microsoft Security. We detected active hackers on your computer stealing passwords. I need you to install AnyDesk to secure it.",
+    "debrief_success": "Well done! Tech companies never cold-call users to report hacking. Never allow remote access to strangers.",
+    "debrief_failure": "You agreed to install software! Remote desktop apps give scammers complete control of your screen and OTPs.",
+    "psychological_tricks": [
+      "Technical Intimidation: Using confusing computer jargon (Trojan, IP breach, network intrusion) to overwhelm seniors.",
+      "False Savior Syndrome: Pretending to be an authorized engineer detecting and solving the problem.",
+      "Simulated Urgency: Claiming hackers are actively stealing files right at this very second."
+    ],
+    "tactics_explanation": "Criminals cold-call targets claiming their computer is severely infected and transmitting banking passwords. They instruct the senior to download remote desktop utilities to 'clean the virus', which actually gives the fraudster full access to screen contents, stored documents, and incoming SMS OTPs.",
+    "red_flags": [
+      "Unsolicited phone call claiming your computer has a security error or virus.",
+      "Demanding installation of AnyDesk, TeamViewer, or UltraViewer.",
+      "Demanding a small service charge via credit card on an unverified webpage."
+    ],
+    "dos": [
+      "Hang up immediately — Microsoft and Apple never make unsolicited phone calls about viruses.",
+      "If software was downloaded, immediately disconnect Wi-Fi and power off the device.",
+      "Have a trusted family member or local technician inspect your computer."
+    ],
+    "donts": [
+      "Never allow remote access to your computer or phone to unknown callers.",
+      "Never log in to your net banking account while someone has remote access.",
+      "Never pay support fees via gift cards or unverified UPI links."
+    ],
+    "audio_script_template": "Well done! You avoided the tech support trap. Companies like Microsoft never cold call users to fix viruses or request remote screen access. Always hang up."
+  },
+  {
+    "id": "sms_delivery_fee",
+    "title": "Failed Parcel & ₹5 Address Fee",
+    "channel": "sms",
+    "difficulty": "easy",
+    "scammer_name": "India Postal Delivery",
+    "persona": "an automated courier delivery bot claiming a parcel cannot be delivered due to incomplete house address",
+    "goal": "get the senior to click a fake phishing link to enter card details for a ₹5 fee",
+    "initial_message": "Your parcel #IN8892 could not be delivered due to missing house number. Update address & pay ₹5 redelivery fee at http://ind-post-track.xyz",
+    "debrief_success": "Excellent! Postal services never send third-party links demanding small fees to update addresses.",
+    "debrief_failure": "You clicked the link! The fake ₹5 payment page steals your complete credit or debit card details.",
+    "psychological_tricks": [
+      "Curiosity & Mystery: Stoking curiosity about an unexpected parcel from a friend or relative.",
+      "Trivial Friction Anchor: Demanding a negligible ₹5 payment so the victim perceives zero financial risk.",
+      "Official Post Facade: Cloning government postal aesthetics to suppress suspicion."
+    ],
+    "tactics_explanation": "Scammers send SMS claiming a package could not be delivered. The link opens a clone of a courier website where entering card details for ₹5 actually captures card numbers, expiration dates, and authorizes high-value debits.",
+    "red_flags": [
+      "SMS from unknown shortcode containing suspicious domain links (.xyz, .top, .info).",
+      "Requesting payment of ₹5 or ₹10 to release or re-route a parcel.",
+      "Absence of your real name or tracking details in the message text."
+    ],
+    "dos": [
+      "Track parcels exclusively through official websites (e.g. indiapost.gov.in, bluedart.com).",
+      "Delete unsolicited delivery messages immediately.",
+      "Check your recent online order history before reacting to delivery alerts."
+    ],
+    "donts": [
+      "Never click links in delivery failure SMS messages.",
+      "Never enter debit/credit card CVV on links received via text.",
+      "Never fill out address verification forms on third-party links."
+    ],
+    "audio_script_template": "Well done! You recognized the fake courier scam. Postal services never send SMS links asking for 5 rupees to fix your address. Always track packages directly on official websites."
+  },
+  {
+    "id": "sms_job_offer",
+    "title": "Part-Time YouTube Like & Earn",
+    "channel": "sms",
+    "difficulty": "medium",
+    "scammer_name": "HR Recruiter Priya",
+    "persona": "a friendly HR agent offering ₹3,000 to ₹5,000 daily for liking YouTube videos from home",
+    "goal": "lure senior into a prepaid task scam where they must deposit money to withdraw 'profits'",
+    "initial_message": "Earn ₹3,500 daily from home just by liking videos! No experience needed. Join our Telegram manager to start receiving instant daily payouts.",
+    "debrief_success": "Great! Legitimate companies never pay thousands of rupees for simply liking videos. This is a task deposit scam.",
+    "debrief_failure": "You replied to the offer! Scammers pay ₹200 initially, then demand lakhs of rupees in deposits that can never be withdrawn.",
+    "psychological_tricks": [
+      "Easy Income Fantasy: Appealing to retirees looking for effortless supplemental income.",
+      "Initial Payout Hook: Paying a real ₹150 for liking 3 videos to establish artificial authenticity.",
+      "Escalating Commitment: Coaxing victims into depositing progressively larger sums into merchant accounts."
+    ],
+    "tactics_explanation": "Victims are recruited via SMS to like videos for daily wages. They are moved to Telegram channels where they are invited into 'crypto investment' or 'prepaid task schemes' where deposited funds can never be withdrawn.",
+    "red_flags": [
+      "Unsolicited job offers paying thousands of rupees for trivial clicks or video likes.",
+      "Redirection to Telegram or WhatsApp groups for task allocation and payment processing.",
+      "Demands to deposit your own money into merchant accounts to unlock earned earnings."
+    ],
+    "dos": [
+      "Ignore unsolicited work-from-home offers sent via SMS.",
+      "Report the sender number as spam on your phone.",
+      "Remember that legitimate companies never hire via random SMS or Telegram."
+    ],
+    "donts": [
+      "Never deposit money to unlock job earnings or commissions.",
+      "Never join Telegram task groups promising daily investment returns.",
+      "Never share your bank account details with unverified online employers."
+    ],
+    "audio_script_template": "Well done! You spotted the work from home task fraud. Legitimate companies never pay high wages for liking videos, and they never ask for upfront deposits. Stay safe."
+  },
+  {
+    "id": "web_digital_lock",
+    "title": "Police Device Lock Page",
+    "channel": "web",
+    "difficulty": "hard",
+    "scammer_name": "Cyber Cell Device Lock",
+    "persona": "a browser lock screen claiming the user's phone is seized and demanding an immediate fine via UPI",
+    "goal": "panic user into paying ₹15,000 penalty on an unverified webpage",
+    "initial_message": "ALERT: Your device is seized by Cyber Police for illegal downloads. Pay fine within 15 mins or police warrant will be executed.",
+    "debrief_success": "Brilliant! You realized websites cannot lock your phone. Closing the browser tab or swiping home easily stops it.",
+    "debrief_failure": "You attempted to pay! Real police never lock devices over web browsers or demand online UPI penalties.",
+    "psychological_tricks": [
+      "Panic Hijacking: Fullscreen browser locks simulating seized device with official police emblems and webcam feed.",
+      "Guilt & Humiliation: Accusing the user of viewing illegal pornography or pirated content.",
+      "Countdown Terror: Visual 15-minute timer threatening home arrest if fine is not paid immediately."
+    ],
+    "tactics_explanation": "Malicious ad redirects put browser into full screen with a blaring siren and message claiming your phone is locked by federal authorities for illegal downloads, demanding an instant ₹15,000 fine via UPI.",
+    "red_flags": [
+      "Browser displays warning that your phone or computer is locked by police.",
+      "Demands payment of an on-screen fine via UPI or cryptocurrency to unlock device.",
+      "Alarm sounds or flashing screens forbidding you from turning off the device."
+    ],
+    "dos": [
+      "Force close your browser (press Home button, swipe away the browser app).",
+      "Clear browser cache and browsing history in phone settings.",
+      "Restart your phone if the browser screen continues to pop up."
+    ],
+    "donts": [
+      "Never pay fines on webpages. Police cannot and do not issue browser lock penalties.",
+      "Never enter your UPI ID or banking passwords on lock screens.",
+      "Never call the emergency support numbers displayed on warning pages."
+    ],
+    "audio_script_template": "Well done! You realized websites cannot seize your phone. Police never lock devices through web browsers or demand UPI fines. Simply closing the browser tab keeps you safe."
+  },
+  {
+    "id": "web_virus_download",
+    "title": "Fake Virus Alert & Harmful APK",
+    "channel": "web",
+    "difficulty": "medium",
+    "scammer_name": "System Security Scanner",
+    "persona": "a flashing webpage claiming 5 viruses have infected the device and urging an APK download",
+    "goal": "trick user into downloading an .apk malware file onto their phone",
+    "initial_message": "CRITICAL: (5) Viruses detected on your phone! Battery and bank logins leaking. Tap to download cleaner.",
+    "debrief_success": "Superb! Websites cannot scan your phone for viruses. Never download .apk files from browser popups.",
+    "debrief_failure": "You tapped download! Downloading .apk files from unknown websites installs SMS-reading and screen-recording trojans.",
+    "psychological_tricks": [
+      "Technical Dread: Flashing countdown timer claiming 5 viruses will wipe battery and steal bank passwords in 2 minutes.",
+      "False Remedy: Providing a single prominent 'Download Antivirus Cleaner' button as the only escape.",
+      "Vibration Simulation: Triggering phone vibration through browser APIs to simulate physical device failure."
+    ],
+    "tactics_explanation": "Browser popups mimic Google or Android security scanners. Clicking 'Clean Now' downloads a malicious .apk file (trojan) that intercepts SMS messages and banking notifications.",
+    "red_flags": [
+      "Website claims to scan your phone hardware and detect specific viruses.",
+      "Prompts to download .apk or unknown software outside Google Play Store.",
+      "Flashing red banners and urgent countdown timers warning of hardware damage."
+    ],
+    "dos": [
+      "Close the browser tab immediately.",
+      "Install apps exclusively from the official Google Play Store or Apple App Store.",
+      "Use built-in Google Play Protect to scan your phone for legitimate security checks."
+    ],
+    "donts": [
+      "Never install .apk files downloaded from web browsers.",
+      "Never grant accessibility, notification, or SMS access to unknown utility apps.",
+      "Never click on flashing virus warnings displayed on news or movie websites."
+    ],
+    "audio_script_template": "Well done! You didn't fall for the fake virus popup. Web pages can never scan your phone for viruses. Always install apps exclusively from the Google Play Store."
+  },
+  {
+    "id": "web_bank_login",
+    "title": "Urgent Bank NetBanking Update",
+    "channel": "web",
+    "difficulty": "easy",
+    "scammer_name": "Metro Trust Bank Portal",
+    "persona": "a clone of a bank login portal asking for username, password, and ATM PIN",
+    "goal": "steal online banking credentials and ATM PIN",
+    "initial_message": "Urgent verification required: Update your NetBanking credentials to prevent account suspension.",
+    "debrief_success": "Outstanding! You inspected the domain and safely closed the page without entering your passwords.",
+    "debrief_failure": "You entered your bank credentials! Phishing websites copy the look of official banks to steal passwords.",
+    "psychological_tricks": [
+      "Brand Familiarity: Pixel-perfect imitation of trusted bank login screens and official typography.",
+      "Fear of Loss: Warning of account suspension or inability to access funds unless updated immediately.",
+      "Step-by-Step Data Harvesting: Breaking down login, password, and ATM PIN into sequential forms to minimize suspicion."
+    ],
+    "tactics_explanation": "Phishing websites sent via email or SMS clone legitimate NetBanking portals. The credentials entered are immediately relayed to the attacker to initiate unapproved money transfers.",
+    "red_flags": [
+      "URL domain mismatch (e.g. sbi-netverify.com instead of onlinesbi.sbi).",
+      "SMS or email claiming account suspension unless logged in within 24 hours.",
+      "Webpage asks for ATM PIN or debit card CVV directly on a login form."
+    ],
+    "dos": [
+      "Bookmark official banking websites and access them exclusively through saved bookmarks.",
+      "Always check the browser address bar for correct official domain names.",
+      "Enable two-factor authentication and SMS alerts on all bank accounts."
+    ],
+    "donts": [
+      "Never click links received via SMS or email to log in to bank accounts.",
+      "Never enter your ATM PIN or NetBanking password on links sent to you.",
+      "Never ignore browser warnings about unverified SSL certificates."
+    ],
+    "audio_script_template": "Well done! You spotted the fake bank login page. Always check website address domains carefully, and never click links in text messages to log in to your bank."
+  }
+]

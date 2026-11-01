@@ -6,19 +6,58 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:audioplayers/audioplayers.dart';
 import '../config/app_config.dart';
 import '../services/realistic_voice_service.dart';
-import 'tts_provider.dart';
+
+class ScenarioArtifact {
+  final String type;
+  final String sender;
+  final String title;
+  final String body;
+  final String actionLabel;
+
+  const ScenarioArtifact({
+    required this.type,
+    required this.sender,
+    required this.title,
+    required this.body,
+    required this.actionLabel,
+  });
+
+  factory ScenarioArtifact.fromJson(Map<String, dynamic> json) {
+    return ScenarioArtifact(
+      type: json['type']?.toString() ?? 'notice',
+      sender: json['sender']?.toString() ?? 'ALERT',
+      title: json['title']?.toString() ?? 'Notification',
+      body: json['body']?.toString() ?? '',
+      actionLabel: json['action_label']?.toString() ?? 'View',
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'type': type,
+    'sender': sender,
+    'title': title,
+    'body': body,
+    'action_label': actionLabel,
+  };
+}
 
 class AiCallState {
   final String latestAiReply;
   final String status;
   final String? evaluation;
   final bool isSpeaking;
+  final ScenarioArtifact? artifact;
+  final String? lastUserMessage;
+  final bool isThinking;
 
   AiCallState({
     this.latestAiReply = '',
     this.status = 'ongoing',
     this.evaluation,
     this.isSpeaking = false,
+    this.artifact,
+    this.lastUserMessage,
+    this.isThinking = false,
   });
 
   AiCallState copyWith({
@@ -26,12 +65,19 @@ class AiCallState {
     String? status,
     String? evaluation,
     bool? isSpeaking,
+    ScenarioArtifact? artifact,
+    bool clearArtifact = false,
+    String? lastUserMessage,
+    bool? isThinking,
   }) {
     return AiCallState(
       latestAiReply: latestAiReply ?? this.latestAiReply,
       status: status ?? this.status,
       evaluation: evaluation ?? this.evaluation,
       isSpeaking: isSpeaking ?? this.isSpeaking,
+      artifact: clearArtifact ? null : (artifact ?? this.artifact),
+      lastUserMessage: lastUserMessage ?? this.lastUserMessage,
+      isThinking: isThinking ?? this.isThinking,
     );
   }
 }
@@ -55,20 +101,27 @@ class AiCallNotifier extends AutoDisposeNotifier<AiCallState> {
       _playerStateSub?.cancel();
       _channel?.sink.close();
       _audioPlayer.stop();
+      _audioPlayer.release();
       _audioPlayer.dispose();
-      ref.read(ttsProvider).stop();
+      ref.read(realisticVoiceProvider).stop();
     });
     return AiCallState();
   }
 
-  void connect(String persona, String initialMessage) {
+  String _activeLang = 'en';
+
+  void connect(String persona, String initialMessage, {String lang = 'en', String? scenarioId}) {
+    _activeLang = lang;
     _wsSub?.cancel();
     _channel?.sink.close();
     _audioPlayer.stop();
 
     final encodedPersona = Uri.encodeComponent(persona);
     final encodedMsg = Uri.encodeComponent(initialMessage);
-    final wsUrl = Uri.parse('${AppConfig.wsBaseUrl}/ws/chat?persona=$encodedPersona&initial_message=$encodedMsg');
+    final scenarioParam = (scenarioId != null && scenarioId.isNotEmpty)
+        ? '&scenario_id=${Uri.encodeComponent(scenarioId)}'
+        : '';
+    final wsUrl = Uri.parse('${AppConfig.wsBaseUrl}/ws/chat?persona=$encodedPersona&initial_message=$encodedMsg&lang=$lang$scenarioParam');
     
     debugPrint("[AiCallProvider] Connecting to $wsUrl");
     _channel = WebSocketChannel.connect(wsUrl);
@@ -76,7 +129,7 @@ class AiCallNotifier extends AutoDisposeNotifier<AiCallState> {
     state = AiCallState(
       latestAiReply: initialMessage,
       status: 'ongoing',
-      isSpeaking: true,
+      isSpeaking: false,
     );
 
     _wsSub = _channel!.stream.listen(
@@ -88,26 +141,60 @@ class AiCallNotifier extends AutoDisposeNotifier<AiCallState> {
           final evaluation = data['evaluation'] as String?;
           final audioB64 = data['audio_b64'] as String?;
 
-          state = AiCallState(
+          ScenarioArtifact? artifact;
+          if (data['artifact'] is Map<String, dynamic> || data['artifact'] is Map) {
+            artifact = ScenarioArtifact.fromJson(Map<String, dynamic>.from(data['artifact'] as Map));
+          }
+
+          state = state.copyWith(
             latestAiReply: reply,
             status: status,
             evaluation: evaluation,
-            isSpeaking: true,
+            isSpeaking: reply.isNotEmpty,
+            artifact: artifact,
+            isThinking: false,
           );
 
-          if (audioB64 != null && audioB64.isNotEmpty) {
-            // Play studio-quality Edge-TTS neural voice audio
-            try {
-              final audioBytes = base64Decode(audioB64);
-              await _audioPlayer.stop();
-              await _audioPlayer.play(BytesSource(audioBytes));
-            } catch (playErr) {
-              debugPrint("[AiCallProvider] Audio playback error: $playErr");
-              ref.read(realisticVoiceProvider).speakRealistic(reply, 'hi');
+          if (kIsWeb) {
+            // On Flutter Web, stream via HTTP Edge-TTS to avoid accumulating unrevoked BytesSource blobs
+            if (reply.isNotEmpty) {
+              ref.read(realisticVoiceProvider).speakRealistic(
+                reply,
+                _activeLang,
+                onComplete: () {
+                  state = state.copyWith(isSpeaking: false);
+                },
+              );
+            } else {
+              state = state.copyWith(isSpeaking: false);
             }
-          } else if (reply.isNotEmpty) {
-            // Fallback to Edge-TTS service
-            ref.read(realisticVoiceProvider).speakRealistic(reply, 'hi');
+          } else {
+            if (audioB64 != null && audioB64.isNotEmpty) {
+              try {
+                final audioBytes = base64Decode(audioB64);
+                await _audioPlayer.stop();
+                await _audioPlayer.play(BytesSource(audioBytes));
+              } catch (playErr) {
+                debugPrint("[AiCallProvider] Audio playback error: $playErr");
+                ref.read(realisticVoiceProvider).speakRealistic(
+                  reply,
+                  _activeLang,
+                  onComplete: () {
+                    state = state.copyWith(isSpeaking: false);
+                  },
+                );
+              }
+            } else if (reply.isNotEmpty) {
+              ref.read(realisticVoiceProvider).speakRealistic(
+                reply,
+                _activeLang,
+                onComplete: () {
+                  state = state.copyWith(isSpeaking: false);
+                },
+              );
+            } else {
+              state = state.copyWith(isSpeaking: false);
+            }
           }
         } catch (e) {
           debugPrint("[AiCallProvider] JSON Parsing Error: $e");
@@ -123,20 +210,27 @@ class AiCallNotifier extends AutoDisposeNotifier<AiCallState> {
   }
 
   void sendVoiceMessage(String text) {
-    if (text.trim().isNotEmpty) {
+    final clean = text.replaceAll('“', '').replaceAll('”', '').replaceAll('"', '').trim();
+    if (clean.isNotEmpty) {
       stopTts();
+      state = state.copyWith(lastUserMessage: clean, isThinking: true);
       if (_channel != null) {
-        _channel!.sink.add(text);
+        _channel!.sink.add(clean);
       }
     }
   }
 
   void stopTts() {
     _audioPlayer.stop();
-    ref.read(ttsProvider).stop();
+    _audioPlayer.release();
+    ref.read(realisticVoiceProvider).stop();
     if (state.isSpeaking) {
       state = state.copyWith(isSpeaking: false);
     }
+  }
+
+  void clearArtifact() {
+    state = state.copyWith(clearArtifact: true);
   }
 
   void endCall() {

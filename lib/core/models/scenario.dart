@@ -12,6 +12,8 @@ class Scenario {
   final String? initialMessage;
   final Map<String, dynamic>? webPage;
 
+  String? get callerName => scammerName;
+
   Scenario({
     required this.id,
     required this.language,

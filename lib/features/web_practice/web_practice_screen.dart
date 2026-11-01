@@ -1,163 +1,258 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/theme/app_theme.dart';
-import '../../core/widgets/practice_tag.dart';
-import '../../core/widgets/i_feel_worried_button.dart';
 import '../../core/models/scenario.dart';
 import '../../core/models/simulation_result.dart';
+import '../../core/providers/os_notification_provider.dart';
+import '../../core/widgets/global_notification_overlay.dart';
+import '../../core/widgets/practice_tag.dart';
+import 'templates/digital_arrest_template.dart';
+import 'templates/electricity_payment_template.dart';
+import 'templates/kyc_verification_template.dart';
+import 'templates/virus_alert_template.dart';
 
-class WebPracticeScreen extends StatefulWidget {
+/// Simulated Mobile Browser Shell.
+/// Features a realistic browser chrome with top URL address bar, red "Not Secure" SSL tag,
+/// back/refresh buttons, and renders native simulated phishing forms with zero HTML dependencies.
+class WebPracticeScreen extends ConsumerStatefulWidget {
   final Scenario? scenario;
 
   const WebPracticeScreen({super.key, this.scenario});
 
   @override
-  State<WebPracticeScreen> createState() => _WebPracticeScreenState();
+  ConsumerState<WebPracticeScreen> createState() => _WebPracticeScreenState();
 }
 
-class _WebPracticeScreenState extends State<WebPracticeScreen> {
-  bool _submittedForm = false;
-  int _secondsRemaining = 899; // 14:59 for digital lock
-  Timer? _countdownTimer;
+class _WebPracticeScreenState extends ConsumerState<WebPracticeScreen> {
+  late String _currentUrl;
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    if (widget.scenario?.id == 'web_digital_lock') {
-      _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        if (mounted && _secondsRemaining > 0) {
-          setState(() => _secondsRemaining--);
-        }
-      });
-    }
+    _currentUrl = _resolveInitialUrl();
   }
 
-  @override
-  void dispose() {
-    _countdownTimer?.cancel();
-    super.dispose();
-  }
-
-  String _formatTimer(int totalSeconds) {
-    final mins = (totalSeconds ~/ 60).toString().padLeft(2, '0');
-    final secs = (totalSeconds % 60).toString().padLeft(2, '0');
-    return '$mins:$secs';
-  }
-
-  void _handleTrapAction(String reason, String fallbackMsg) {
-    if (_submittedForm) return;
-    setState(() => _submittedForm = true);
-    Future.delayed(const Duration(milliseconds: 600), () {
-      if (mounted) {
-        SimulationResult.recordResult(
-          scenarioTitle: widget.scenario?.title ?? 'Web Security Practice',
-          channel: 'web',
-          status: 'compromised',
-        );
-        context.replace('/debrief', extra: {
-          'outcome': 'failure:$reason',
-          'message': widget.scenario?.debriefFailure ?? fallbackMsg,
-        });
-      }
+  void _refreshPage() {
+    setState(() => _isLoading = true);
+    Future.delayed(const Duration(milliseconds: 300), () {
+      if (mounted) setState(() => _isLoading = false);
     });
   }
 
-  void _handleSafeExit(String reason, String fallbackMsg) {
+  String _resolveInitialUrl() {
+    final sId = (widget.scenario?.id ?? '').toLowerCase();
+    final title = (widget.scenario?.title ?? '').toLowerCase();
+
+    if (sId.contains('virus') || sId.contains('apk') || title.contains('virus')) {
+      return 'http://android-virus-cleaner-booster.xyz/scan-results';
+    } else if (sId.contains('lock') || sId.contains('arrest') || sId.contains('police') || sId.contains('cbi') || title.contains('lock') || title.contains('police')) {
+      return 'http://cyber-crime-division-notice.gov-verify.in/device-lock';
+    } else if (sId.contains('elec') || sId.contains('bill') || title.contains('elec') || title.contains('bill')) {
+      return 'http://metro-power-bill-pay.in/verify';
+    }
+    return 'http://metro-trust-netbanking.portal-verify.in/login';
+  }
+
+  void _handleFormCompromised(String reason, List<String> leaks) {
+    // Notify Orchestrator of trap compromise
+    ref.read(osNotificationProvider.notifier).sendAppAction(
+      sourceApp: 'Browser',
+      action: 'compromise_alert',
+      text: reason,
+      extra: {'leaks': leaks, 'url': _currentUrl},
+    );
+
+    SimulationResult.recordResult(
+      scenarioTitle: widget.scenario?.title ?? 'Web Security Practice',
+      channel: 'web',
+      status: 'compromised',
+    );
+
+    final hookDescription = _resolveHook();
+    final giveawayDescription = _resolveGiveaway();
+
+    // Immediately halt drill and route to Post-Scam Analytics Report
+    context.replace('/debrief', extra: {
+      'outcome': 'failure:compromised',
+      'scenarioId': widget.scenario?.id,
+      'hook': hookDescription,
+      'leak': leaks.join(' • '),
+      'giveaway': giveawayDescription,
+      'customMessage': 'Caution! Submitting personal information on unverified HTTP websites exposes your funds to fraudsters.',
+    });
+  }
+
+  String _resolveHook() {
+    final sId = (widget.scenario?.id ?? '').toLowerCase();
+    final title = (widget.scenario?.title ?? '').toLowerCase();
+
+    if (sId.contains('virus') || sId.contains('apk') || title.contains('virus')) {
+      return 'Fabricated Device Danger & Virus Scare: False claims that 5 viruses are destroying battery and leaking passwords to force downloading malicious APK cleaner.';
+    } else if (sId.contains('lock') || sId.contains('arrest') || sId.contains('police') || sId.contains('cbi') || title.contains('lock') || title.contains('police')) {
+      return 'Coercive Legal Authority & Device Lock: Fake police lock screen threatening imminent arrest unless an instant UPI fine is paid.';
+    } else if (sId.contains('elec') || sId.contains('bill') || title.contains('elec') || title.contains('bill')) {
+      return 'Artificial Fear of Service Cutoff: Threatened power disconnection tonight at 9:30 PM to incite urgency.';
+    }
+    return 'Account Panic & Fear of Asset Freeze: Claimed bank accounts would be locked without immediate NetBanking credential update.';
+  }
+
+  String _resolveGiveaway() {
+    return 'Unsecured HTTP Protocol ("Not Secure" warning in address bar), mismatched domain name, and demand for immediate confidential OTP/Card codes.';
+  }
+
+  void _onSafeExit() {
     SimulationResult.recordResult(
       scenarioTitle: widget.scenario?.title ?? 'Web Security Practice',
       channel: 'web',
       status: 'deflected',
     );
+
     context.replace('/debrief', extra: {
-      'outcome': 'success:$reason',
-      'message': widget.scenario?.debriefSuccess ?? fallbackMsg,
+      'outcome': 'success:deflected',
+      'scenarioId': widget.scenario?.id,
+      'hook': _resolveHook(),
+      'leak': 'None! You identified the suspicious browser URL and exited safely.',
+      'giveaway': _resolveGiveaway(),
+      'customMessage': 'Outstanding defense! You noticed the suspicious website indicators and refused to submit sensitive details.',
+    });
+  }
+
+  void _onReportScam() {
+    SimulationResult.recordResult(
+      scenarioTitle: widget.scenario?.title ?? 'Web Security Practice',
+      channel: 'web',
+      status: 'deflected',
+    );
+
+    context.replace('/debrief', extra: {
+      'outcome': 'success:deflected',
+      'scenarioId': widget.scenario?.id,
+      'hook': _resolveHook(),
+      'leak': 'None! You reported the fake phishing website.',
+      'giveaway': _resolveGiveaway(),
+      'customMessage': 'Outstanding defense! You recognized the fraudulent website and reported the fraud.',
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final scenarioId = widget.scenario?.id ?? '';
-    final isDigitalLock = scenarioId == 'web_digital_lock';
-    final isVirusDownload = scenarioId == 'web_virus_download';
+    return GlobalNotificationOverlay(
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF1F5F9),
+        body: Column(
+          children: [
+            // Legal Practice Safety Tag
+            const PracticeTag(),
 
-    String displayUrl = 'http://secure-bank-update-login.in/kyc';
-    if (isDigitalLock) {
-      displayUrl = 'http://cyber-crime-cell-lock.gov-alert.in/device-seized';
-    } else if (isVirusDownload) {
-      displayUrl = 'http://android-virus-cleaner-booster.xyz/scan-results';
-    }
+            // Top Mobile Browser Chrome & URL Bar
+            _buildBrowserTopBar(),
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Chrome Simulator'),
-        backgroundColor: Colors.grey.shade900,
-        foregroundColor: Colors.white,
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () => _handleSafeExit('closed_tab', 'Excellent! You closed the unsafe website.'),
+            // Web Page Content
+            Expanded(
+              child: _isLoading
+                  ? const Center(child: CircularProgressIndicator(color: Color(0xFF1E88E5)))
+                  : _buildActiveWebTemplate(),
+            ),
+
+            // Bottom Browser Controls Dock
+            _buildBrowserBottomBar(),
+          ],
         ),
       ),
-      body: Column(
+    );
+  }
+
+  Widget _buildBrowserTopBar() {
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      child: Row(
         children: [
-          const PracticeTag(),
-          // Fake Address Bar
-          Container(
-            color: Colors.grey.shade200,
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(24),
-                    border: Border.all(color: Colors.grey.shade400),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.lock_open, color: AppTheme.red, size: 18),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          displayUrl,
-                          style: const TextStyle(color: AppTheme.red, fontSize: 14),
-                          overflow: TextOverflow.ellipsis,
+          // Close and Exit Button
+          IconButton(
+            key: const Key('web_close_button'),
+            icon: const Icon(Icons.close_rounded, size: 22, color: Color(0xFF334155)),
+            onPressed: _onSafeExit,
+            tooltip: 'Close and Exit / बाहर निकलें',
+          ),
+          Expanded(
+            child: Container(
+              height: 40,
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                color: const Color(0xFFF1F5F9),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: const Color(0xFFE2E8F0)),
+              ),
+              child: Row(
+                children: [
+                  // Red "Not Secure" SSL Warning Indicator
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFEE2E2),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Icon(Icons.warning_amber_rounded, size: 12, color: Color(0xFFDC2626)),
+                        SizedBox(width: 4),
+                        Text(
+                          'Not Secure',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800,
+                            color: Color(0xFFDC2626),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 6),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  color: AppTheme.red.withValues(alpha: 0.1),
-                  child: Row(
-                    children: const [
-                      Icon(Icons.warning, color: AppTheme.red, size: 16),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          'Warning: Unverified domain. Not an official government or secure site.',
-                          style: TextStyle(color: AppTheme.red, fontSize: 12, fontWeight: FontWeight.bold),
-                        ),
+                  const SizedBox(width: 8),
+
+                  // URL
+                  Expanded(
+                    child: Text(
+                      _currentUrl,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Color(0xFF475569),
+                        fontWeight: FontWeight.w500,
                       ),
-                    ],
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-              ],
+                  IconButton(
+                    icon: const Icon(Icons.refresh_rounded, size: 16, color: Color(0xFF64748B)),
+                    onPressed: _refreshPage,
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                  ),
+                ],
+              ),
             ),
           ),
-          
-          // Dynamic Web Content
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(20.0),
-              child: isDigitalLock
-                  ? _buildDigitalLockContent()
-                  : isVirusDownload
-                      ? _buildVirusDownloadContent()
-                      : _buildDefaultBankContent(),
+          const SizedBox(width: 6),
+          // Report Fake Website Button
+          TextButton.icon(
+            key: const Key('web_report_scam_button'),
+            onPressed: _onReportScam,
+            style: TextButton.styleFrom(
+              backgroundColor: const Color(0xFFFEF2F2),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              minimumSize: const Size(0, 34),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: const BorderSide(color: Color(0xFFFECACA)),
+              ),
+            ),
+            icon: const Icon(Icons.shield_rounded, size: 15, color: Color(0xFFDC2626)),
+            label: const Text(
+              'Report',
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFFDC2626)),
             ),
           ),
         ],
@@ -165,217 +260,67 @@ class _WebPracticeScreenState extends State<WebPracticeScreen> {
     );
   }
 
-  // 1. Digital Lock Scenario (Fake Police Device Lock)
-  Widget _buildDigitalLockContent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.red.shade900,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            children: [
-              const Icon(Icons.gavel, size: 54, color: Colors.white),
-              const SizedBox(height: 12),
-              const Text(
-                '🚨 LAW ENFORCEMENT NOTICE\nDEVICE RESTRICTED UNDER CYBER ACT',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 12),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  'Time to Arrest: ${_formatTimer(_secondsRemaining)}',
-                  style: const TextStyle(color: Colors.yellowAccent, fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 20),
-        Card(
-          elevation: 2,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  'Central Cyber Division Seizure Order:',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'Your mobile device has been restricted due to unauthorized downloads. A court arrest warrant has been prepared. To stop police dispatch to your home address, pay the statutory fine of ₹15,000 immediately.',
-                  style: TextStyle(fontSize: 15, height: 1.4),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(height: 20),
-        ElevatedButton.icon(
-          icon: const Icon(Icons.payment),
-          label: const Text('Pay ₹15,000 Fine via UPI Immediately', style: TextStyle(fontSize: 16)),
-          onPressed: _submittedForm ? null : () => _handleTrapAction('paid_fine', 'Never pay fines on websites! Real police never lock phones or demand UPI transfers.'),
-          style: ElevatedButton.styleFrom(backgroundColor: AppTheme.red),
-        ),
-        const SizedBox(height: 12),
-        OutlinedButton.icon(
-          icon: const Icon(Icons.close),
-          label: const Text('Close Tab & Exit Browser (Safe Action)', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          onPressed: () => _handleSafeExit('closed_tab', 'Great job! You closed the browser tab. Websites cannot lock your phone.'),
-        ),
-        const SizedBox(height: 12),
-        TextButton.icon(
-          icon: const Icon(Icons.phone_in_talk, color: AppTheme.primaryTeal),
-          label: const Text('Report to National Cyber Crime Helpline (1930)'),
-          onPressed: () => _handleSafeExit('reported_1930', 'Excellent! Dialing 1930 connects you directly with the official Indian Cyber Crime Portal.'),
-        ),
-        const SizedBox(height: 24),
-        const IFeelWorriedButton(),
-      ],
+  Widget _buildActiveWebTemplate() {
+    final sId = (widget.scenario?.id ?? '').toLowerCase();
+    final title = (widget.scenario?.title ?? '').toLowerCase();
+
+    if (sId.contains('virus') || sId.contains('apk') || title.contains('virus')) {
+      return VirusAlertTemplate(
+        onCompromise: _handleFormCompromised,
+      );
+    } else if (sId.contains('lock') || sId.contains('arrest') || sId.contains('police') || sId.contains('cbi') || title.contains('lock') || title.contains('police')) {
+      return DigitalArrestTemplate(
+        onCompromise: _handleFormCompromised,
+      );
+    } else if (sId.contains('elec') || sId.contains('bill') || title.contains('elec') || title.contains('bill')) {
+      return ElectricityPaymentTemplate(
+        onCompromise: _handleFormCompromised,
+      );
+    }
+    return KycVerificationTemplate(
+      onCompromise: _handleFormCompromised,
     );
   }
 
-  // 2. Virus Download Scenario (Fake Virus Alert & Harmful APK)
-  Widget _buildVirusDownloadContent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.orange.shade800,
-            borderRadius: BorderRadius.circular(12),
+  Widget _buildBrowserBottomBar() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        border: Border(top: BorderSide(color: Color(0xFFE2E8F0))),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 18, color: Color(0xFF64748B)),
+            onPressed: _onSafeExit,
           ),
-          child: Column(
-            children: const [
-              Icon(Icons.bug_report, size: 54, color: Colors.white),
-              SizedBox(height: 12),
-              Text(
-                '⚠️ CRITICAL WARNING: (5) VIRUSES FOUND!\nBATTERY & BANK DETAILS COMPROMISED',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
-            ],
+          IconButton(
+            icon: const Icon(Icons.arrow_forward_ios_rounded, size: 18, color: Color(0xFFCBD5E1)),
+            onPressed: () {},
           ),
-        ),
-        const SizedBox(height: 20),
-        Card(
-          elevation: 2,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Device Infection Report:',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'Your Android system is 28.4% damaged by Trojan.Banker malware. Photos, OTPs, and WhatsApp chats are currently leaking. Download the antivirus cleaner APK immediately to save your phone.',
-                  style: TextStyle(fontSize: 15, height: 1.4),
-                ),
-                const SizedBox(height: 16),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: LinearProgressIndicator(
-                    value: 0.72,
-                    minHeight: 12,
-                    backgroundColor: Colors.grey.shade300,
-                    valueColor: const AlwaysStoppedAnimation<Color>(Colors.red),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                const Text('Damage Level: High (72%)', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 12)),
-              ],
+          IconButton(
+            icon: const Icon(Icons.share_outlined, size: 20, color: Color(0xFF64748B)),
+            onPressed: () {},
+          ),
+          Container(
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              border: Border.all(color: const Color(0xFF64748B), width: 1.5),
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: const Text(
+              '1',
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF64748B)),
             ),
           ),
-        ),
-        const SizedBox(height: 20),
-        ElevatedButton.icon(
-          icon: const Icon(Icons.download),
-          label: const Text('📥 Download Antivirus_Cleaner_Pro.apk', style: TextStyle(fontSize: 16)),
-          onPressed: _submittedForm ? null : () => _handleTrapAction('downloaded_apk', 'Never download .apk files from websites! This is how scammers install spyware.'),
-          style: ElevatedButton.styleFrom(backgroundColor: AppTheme.red),
-        ),
-        const SizedBox(height: 12),
-        ElevatedButton.icon(
-          icon: const Icon(Icons.file_download),
-          label: const Text('Install SecurityUpdate.apk (Recommended)', style: TextStyle(fontSize: 14)),
-          onPressed: _submittedForm ? null : () => _handleTrapAction('downloaded_apk', 'Scammers disguise malware as security updates. Only install apps from the Google Play Store.'),
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.grey.shade800),
-        ),
-        const SizedBox(height: 12),
-        OutlinedButton.icon(
-          icon: const Icon(Icons.close),
-          label: const Text('Close Page / Do Not Download (Safe Action)', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          onPressed: () => _handleSafeExit('refused_download', 'Superb! Websites cannot scan your phone. Any website claiming you have viruses is trying to trick you into downloading malware.'),
-        ),
-        const SizedBox(height: 24),
-        const IFeelWorriedButton(),
-      ],
-    );
-  }
-
-  // 3. Default Bank Form Scenario
-  Widget _buildDefaultBankContent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const Icon(Icons.account_balance, size: 64, color: AppTheme.primaryTeal),
-        const SizedBox(height: 16),
-        const Text(
-          'Metro Trust Bank - Urgent Verification',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 24),
-        const Text(
-          'Please enter your NetBanking ID, Password, and ATM PIN to update your account details immediately.',
-          style: TextStyle(fontSize: 18),
-        ),
-        const SizedBox(height: 24),
-        TextField(
-          decoration: InputDecoration(
-            labelText: 'NetBanking Username',
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+          IconButton(
+            icon: const Icon(Icons.more_horiz_rounded, size: 20, color: Color(0xFF64748B)),
+            onPressed: () {},
           ),
-        ),
-        const SizedBox(height: 16),
-        TextField(
-          obscureText: true,
-          decoration: InputDecoration(
-            labelText: 'Password / ATM PIN',
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-          ),
-        ),
-        const SizedBox(height: 24),
-        ElevatedButton(
-          onPressed: _submittedForm ? null : () => _handleTrapAction('entered_credentials', 'Never enter passwords or PINs on unverified websites!'),
-          style: ElevatedButton.styleFrom(backgroundColor: AppTheme.red),
-          child: const Text('Submit Details'),
-        ),
-        const SizedBox(height: 16),
-        OutlinedButton(
-          onPressed: () => _handleSafeExit('closed_page', 'Excellent! You closed the unsafe website without entering sensitive information.'),
-          child: const Text('Close This Page Safely'),
-        ),
-        const SizedBox(height: 32),
-        const IFeelWorriedButton(),
-      ],
+        ],
+      ),
     );
   }
 }

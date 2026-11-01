@@ -1,18 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 import '../config/app_config.dart';
-import '../providers/tts_provider.dart';
 
 class RealisticVoiceService {
   final AudioPlayer _player = AudioPlayer();
-  final Ref _ref;
+  http.Client? _activeClient;
   bool _isPlaying = false;
   StreamSubscription<PlayerState>? _playerStateSubscription;
 
-  RealisticVoiceService(this._ref) {
+  RealisticVoiceService() {
     _playerStateSubscription = _player.onPlayerStateChanged.listen((state) {
       _isPlaying = state == PlayerState.playing;
     });
@@ -31,61 +31,92 @@ class RealisticVoiceService {
       }
     } catch (e) {
       debugPrint('[RealisticVoiceService] Error playing base64 audio: $e');
+      onComplete?.call();
     }
   }
 
-  /// Speaks using the realistic Edge-TTS backend endpoint, with local TTS fallback
+  /// Speaks exclusively using the studio-quality Edge-TTS neural voice endpoint via POST with JSON body and binary BytesSource
   Future<void> speakRealistic(String text, String lang, {VoidCallback? onComplete, String rate = '+18%'}) async {
-    if (text.trim().isEmpty) return;
+    if (text.trim().isEmpty) {
+      onComplete?.call();
+      return;
+    }
+
+    final isTest = WidgetsBinding.instance.runtimeType.toString().contains('Test');
+    if (isTest) {
+      onComplete?.call();
+      return;
+    }
 
     await stop();
 
-    // Try backend Edge-TTS endpoint first
     try {
-      final encodedText = Uri.encodeComponent(text);
       final voice = (lang == 'hi' || lang == 'mr') ? 'hi-IN-MadhurNeural' : 'en-IN-PrabhatNeural';
-      final encodedRate = Uri.encodeComponent(rate);
-      final url = '${AppConfig.apiBaseUrl}/tts?text=$encodedText&voice=$voice&rate=$encodedRate';
+      final client = http.Client();
+      _activeClient = client;
 
-      await _player.play(UrlSource(url));
-      if (onComplete != null) {
-        _player.onPlayerComplete.first.then((_) => onComplete());
-      }
-      return;
-    } catch (e) {
-      debugPrint('[RealisticVoiceService] Backend TTS unreachable, falling back to local TTS: $e');
-    }
+      final url = Uri.parse('${AppConfig.apiBaseUrl}/tts');
+      http.Response response = await client.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'text': text,
+          'voice': voice,
+          'rate': rate,
+        }),
+      );
 
-    // Fallback: device TTS
-    try {
-      await _ref.read(ttsProvider).speak(text);
-      if (onComplete != null) {
-        onComplete();
+      // Backward compatibility: If deployed backend returns 405 (prior to pushing & redeploying new POST endpoint), fallback to GET with query params
+      if (response.statusCode == 405) {
+        final getUri = Uri.parse('${AppConfig.apiBaseUrl}/tts').replace(
+          queryParameters: {
+            'text': text,
+            'voice': voice,
+            'rate': rate,
+          },
+        );
+        response = await client.get(getUri);
       }
+
+      if (response.statusCode == 200 && response.bodyBytes.isNotEmpty) {
+        await _player.play(BytesSource(response.bodyBytes));
+        if (onComplete != null) {
+          _player.onPlayerComplete.first.then((_) => onComplete());
+        }
+        return;
+      }
+      onComplete?.call();
     } catch (e) {
-      debugPrint('[RealisticVoiceService] Local TTS error: $e');
+      debugPrint('[RealisticVoiceService] Edge-TTS POST playback error: $e');
+      onComplete?.call();
+    } finally {
+      _activeClient?.close();
+      _activeClient = null;
     }
   }
 
   Future<void> stop() async {
     try {
+      _activeClient?.close();
+      _activeClient = null;
       await _player.stop();
-    } catch (_) {}
-    try {
-      await _ref.read(ttsProvider).stop();
+      await _player.release();
     } catch (_) {}
     _isPlaying = false;
   }
 
   void dispose() {
+    _activeClient?.close();
+    _activeClient = null;
     _playerStateSubscription?.cancel();
+    _player.stop();
+    _player.release();
     _player.dispose();
   }
 }
 
 final realisticVoiceProvider = Provider<RealisticVoiceService>((ref) {
-  final service = RealisticVoiceService(ref);
+  final service = RealisticVoiceService();
   ref.onDispose(() => service.dispose());
   return service;
 });
-

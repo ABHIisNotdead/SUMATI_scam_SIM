@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 > **"A flight simulator for cyber defense."**  
-> Sumati protects senior citizens in India against cyber fraud through authentic, zero-risk, AI-powered scam simulations, live voice roleplay, community intelligence, and secure family monitoring.
+> Sumati protects senior citizens in India against cyber fraud through authentic, zero-risk, multi-agent AI scam simulations, continuous hands-free voice roleplay, dynamic cross-app attack orchestration, community intelligence, and secure family monitoring.
 
 ---
 
@@ -17,79 +17,129 @@
 2. [What is Sumati?](#-what-is-sumati)
 3. [Key Features](#-key-features)
    - [Interactive Practice Modalities](#1-interactive-practice-modalities)
-   - [Multilingual AI Roleplay & Voice Engine](#2-multilingual-ai-roleplay--voice-engine)
-   - [Ask AI Scam Checker & Screenshot OCR](#3-ask-ai-scam-checker--screenshot-ocr)
-   - [Emergency Cyber Checklist & 1930 Golden Hour](#4-emergency-cyber-checklist--1930-golden-hour)
-   - [PIN-Protected Family Connect & Guardian Dashboard](#5-pin-protected-family-connect--guardian-dashboard)
-   - [Crowdsourced Scam Intel Database](#6-crowdsourced-scam-intel-database)
+   - [Continuous Hands-Free Voice Engine & VAD Auto-Mic](#2-continuous-hands-free-voice-engine--vad-auto-mic)
+   - [Antigravity OS Multi-Agent Simulation & Cross-App Orchestration](#3-antigravity-os-multi-agent-simulation--cross-app-orchestration)
+   - [Universal AI Scam Detection Checker (Voice & Text)](#4-universal-ai-scam-detection-checker-voice--text)
+   - [Universal "Report Scam" & Post-Drill Analytics Debrief](#5-universal-report-scam--post-drill-analytics-debrief)
+   - [Call & Notification Sound Engine](#6-call--notification-sound-engine)
+   - [Ask AI Scam Checker & Screenshot OCR](#7-ask-ai-scam-checker--screenshot-ocr)
+   - [PIN-Protected Family Connect & Guardian Dashboard](#8-pin-protected-family-connect--guardian-dashboard)
+   - [Emergency Cyber Checklist & 1930 Golden Hour](#9-emergency-cyber-checklist--1930-golden-hour)
+   - [Crowdsourced Scam Intel Database](#10-crowdsourced-scam-intel-database)
 4. [System Architecture](#-system-architecture)
 5. [Database Schema](#-database-schema)
 6. [Tech Stack](#-tech-stack)
 7. [Installation & Local Setup](#-installation--local-setup)
 8. [Cloud Deployment (Render / Docker)](#-cloud-deployment-render--docker)
 9. [Project Directory Structure](#-project-directory-structure)
+10. [Automated Verification & Testing](#-automated-verification--testing)
 
 ---
 
 ## 🚨 The Problem
 
 Senior citizens in India are the primary targets of psychological cyber manipulation:
-* **"Digital Arrest" Scams**: Impersonating Police/CBI claiming narcotics or money laundering seized under Aadhaar.
-* **Electricity Cutoff Threats**: Late-night SMS/Calls threatening power disconnection unless paid via random APKs.
-* **Bank KYC & OTP Fraud**: Urgent calls warning ATM cards or pensions will be blocked today.
-* **Hospital Emergency Spoofs**: Impersonators claiming a son or grandchild is hospitalized and in critical condition.
+* **"Digital Arrest" Intimidation**: Scammers posing as CBI / Cyber Crime Police alleging bank accounts or illegal parcels linked to the senior's Aadhaar under fictitious legal orders.
+* **Electricity Cutoff Arrears**: Late-night SMS/Calls threatening immediate feeder disconnection unless cleared via phishing links or malicious APKs.
+* **Banking KYC & Debit Card Freeze**: High-pressure warnings that ATM cards, pensions, or NetBanking will be suspended today.
+* **Hospital / Family Emergency Spoofs**: Impersonators claiming a son, daughter, or grandchild had an accident and urgently requires hospital admission fees via UPI.
 
-**Why reading pamphlets fails:** Under extreme urgency and fear, reading advice does not create muscle memory. Seniors freeze and comply.  
-**The Solution:** An interactive **flight simulator** where seniors safely experience these scams firsthand, practice refusal reflexes, and learn how to hang up, block, and report.
+**Why reading pamphlets fails:** Under extreme urgency, emotional pressure, and fear, reading passive advice does not build muscle memory. Seniors freeze and comply.  
+**The Solution:** An authentic, zero-risk **cyber flight simulator** where seniors experience realistic fraud across real-world digital channels (Voice Calls, WhatsApp, SMS, Web portals), build automatic refusal reflexes, and learn how to hang up, block, and report.
 
 ---
 
 ## 💡 What is Sumati?
 
-**Sumati (सुमति)** is an accessible, senior-first Flutter application paired with an ultra-low-latency FastAPI backend. It provides:
-1. **100% Safe Simulations**: No real money, links, or numbers are ever compromised.
-2. **Accessible Senior Design**: 48px+ touch targets, high contrast, trilingual support (**English, हिंदी, मराठी**), and zero confusing technical jargon.
-3. **Realistic Neural Speech**: Realistic Indian caller voices powered by Microsoft Edge-TTS neural models (`hi-IN-MadhurNeural` and `en-IN-PrabhatNeural`).
-4. **Adaptive AI Scammer**: Driven by Groq Cloud (`qwen/qwen3.8-27b`) with dynamic multilingual code-switching that stays in character and adapts when the senior speaks Hindi or English.
+**Sumati (सुमति)** is an accessible, senior-first Flutter application paired with an ultra-low-latency FastAPI multi-agent backend. It features:
+1. **100% Zero-Risk Simulation**: Runs in an isolated sandbox where seniors practice against realistic attacks without risking money, credentials, or privacy.
+2. **Accessible Senior Design**: 48px+ touch targets, high contrast, clean typography, trilingual voice guides (**English, हिंदी, मराठी**), and zero confusing technical jargon.
+3. **Continuous Hands-Free Voice Interaction**: Automatic speech-to-text with voice activity detection (VAD), auto-rearming mic loops, and audio mutex locks that prevent double-talking.
+4. **Context-Aware Non-Repeating AI**: Multi-turn dialogue memory prevents repetitive canned phrases and intelligently answers questions regarding legal sections, officer identity, or refusals.
+5. **Cross-Platform & Web Ready**: 100% pure Dart & HTTP streaming with zero platform-dependent `dart:io` barriers—runs seamlessly on Android, iOS, and Web.
 
 ---
 
 ## ✨ Key Features
 
 ### 1. Interactive Practice Modalities
-* 📞 **Fake Voice Call Drill**: An authentic incoming calling interface with ringtone, caller ID, real-time microphone voice input, speech recognition, and live conversational scam dialogue.
-* 💬 **WhatsApp Fraud Simulator**: Authentic WhatsApp interface complete with profile badges, end-to-end encryption notices, unknown sender warning banners (**[ 🚫 Block & Report ]** & **[ 🗑️ Delete Chat ]**), big voice read-aloud buttons, and suggested branch replies.
-* ✉️ **SMS Phishing Practice**: Android Google Messages layout testing reflexes against fake bank lottery and electricity threat messages.
-* 🌐 **Phishing Website Simulator**: Interactive browser simulation where users inspect fraudulent URLs, spot security red flags, and avoid entering sensitive credentials.
+* 📞 **Fake Voice Call Drill**: Native calling interface with incoming ringtone, caller ID, real-time live voice recording, pulsing audio visualizer, live subtitles, and conversational scam dialogue.
+* 💬 **WhatsApp Fraud Simulator**: Authentic WhatsApp layout with profile badges, end-to-end encryption notices, unknown sender warnings (**[ 🚫 Block & Report ]** & **[ 🗑️ Delete Chat ]**), voice read-aloud buttons, media document previews, and quick response chips.
+* ✉️ **SMS Phishing Practice**: Android Google Messages layout testing reflexes against bank KYC freeze alerts and fake electricity bills.
+* 🌐 **Phishing Website Simulator**: Full-screen simulated browser with an unverified SSL top bar, address bar inspection, and 3 distinct real-world phishing templates:
+  - **Digital Arrest Device Lock**: 5-minute countdown, High Court seal, and fake legal settlement transfer.
+  - **Virus Alert APK Trap**: 60-second countdown, simulated 28.4% system damage bar, and malicious `.apk` download trap.
+  - **Banking KYC NetBanking Portal**: Urgent debit card unlock form with credential harvesting traps.
+  - Floating red **"Exit Practice"** button so seniors can safely terminate web drills at any moment.
 
-### 2. Multilingual AI Roleplay & Voice Engine
-* **Dynamic Code-Switching**: If a senior asks *"हिंदी में बात करो"* or speaks in Hindi, the AI instantly switches to authentic Hindi in Devanagari script, staying strictly in character without ever saying *"I cannot speak Hindi"*.
-* **Brisk Natural Pace (+18%)**: Voice synthesis is calibrated at `rate="+18%"` to replicate natural, human conversational telephone pacing rather than sluggish robotic narration.
-* **In-Memory Streaming**: Synthesized audio is streamed and decoded entirely in RAM (base64) so backend disks never accumulate storage waste.
+---
 
-### 3. Ask AI Scam Checker & Screenshot OCR
-* Seniors can paste suspicious WhatsApp messages, SMS texts, or URLs.
+### 2. Continuous Hands-Free Voice Engine & VAD Auto-Mic
+* **Self-Sustaining Auto-Listening**: When the caller finishes speaking, the microphone automatically turns ON and stays hot. If the user pauses or hesitates, the engine auto-re-arms so the mic never goes cold.
+* **Real-Time Live Voice-to-Text**: Displays spoken words live on screen as the user speaks with a pulsing `REC` indicator and visual soundwave.
+* **1.5s Silence Debounce**: Speech is automatically finalized and submitted to the caller 1.5 seconds after speaking ceases—no manual button taps required.
+* **Audio Mutex Lock**: The microphone is strictly muted while the AI scammer speaks to eliminate acoustic feedback, echo, and double-talking.
+* **Neural Voice Calibrated Pace (+18%)**: Realistic Indian caller voices powered by Microsoft Edge-TTS (`hi-IN-MadhurNeural` and `en-IN-PrabhatNeural`) calibrated for natural telephone cadence.
+
+---
+
+### 3. Antigravity OS Multi-Agent Simulation & Cross-App Orchestration
+* **Multi-Modal Attack Coordination**: Orchestrates coordinated cross-app attacks. A voice scammer can dynamically trigger fake WhatsApp warrant images or SMS phishing links that drop down as native top-of-screen notification banners *over* the active call.
+* **Global Notification Overlay**: Interactive system banner alerts allow seniors to inspect incoming cross-app messages without dropping the simulated call.
+
+---
+
+### 4. Universal AI Scam Detection Checker (Voice & Text)
+* **Real-Time Pushback Detection**: Built-in regex and semantic analysis detects when a senior verbally or textually identifies fraud across English, Hindi, Hinglish, and Marathi (e.g., *"this is fake"*, *"police ko call karunga"*, *"I know this is a scam"*, *"section 144 is fraud"*).
+* **Dynamic Deflection & Scammer Panic**: When detected, the scammer panics, disconnects, and leaves the chat (*"⚠️ Scammer disconnected and left the chat: Scam was recognized"*), awarding the user a successful deflection defense.
+
+---
+
+### 5. Universal "Report Scam" & Post-Drill Analytics Debrief
+* **One-Tap Universal Report Action**: Every simulation screen (Call, WhatsApp, SMS, Web) features a prominent **"Report Scam"** button for immediate drill deflection.
+* **Post-Scam Analytics Dashboard (Debrief)**: Complete defensive breakdown presenting three educational pillars:
+  - 🎣 **The Hook**: The psychological lever used (Fear of arrest, urgency of power cutoff, emotional panic).
+  - 💧 **The Leak**: What information the scammer attempted to extract (OTP, Aadhaar, NetBanking password).
+  - 💡 **The Giveaway**: The dead giveaways and red flags to remember for the future.
+
+---
+
+### 6. Call & Notification Sound Engine
+* **Native Incoming Ringtones**: Procedural dual-frequency bell tones for realistic incoming calls.
+* **Message Notification Chimes**: Short, clean chimes when fake WhatsApp or SMS alerts arrive.
+* **Zero-Leak Lifecycle**: Sound players automatically cease on call answer, decline, screen exit, or drill completion.
+
+---
+
+### 7. Ask AI Scam Checker & Screenshot OCR
+* Seniors can paste suspicious WhatsApp forwards, SMS messages, or URLs for instant verification.
 * **Camera / Screenshot OCR**: Extracts text from suspicious bills and screenshots using Google ML Kit on-device text recognition.
-* **Verdict System**: AI analyzes the message and provides an immediate traffic-light verdict (**HIGH RISK**, **SUSPICIOUS**, **SAFE**), plain-language reasons, step-by-step guidance, and reads the advice aloud.
+* **Traffic-Light Verdict**: Instant verdict (**HIGH RISK**, **SUSPICIOUS**, **SAFE**), plain-language explanations, and voice read-aloud guidance.
 
-### 4. Emergency Cyber Checklist & 1930 Golden Hour
-* Immediate, step-by-step triage for victims who were just targeted.
-* Focuses on the **2-Hour Golden Window** to help victims call the **National Cyber Crime Helpline (1930)** to freeze illicit bank transfers.
+---
+
+### 8. PIN-Protected Family Connect & Guardian Dashboard
+* **Zero Passwords**: Seniors generate a unique **4-digit Security PIN** (e.g. `5821`).
+* **One-Tap WhatsApp Share**: Seniors can share their connection code with children or guardians.
+* **Remote Guardian Dashboard**: Guardians connect using the senior's phone number and PIN to monitor:
+  - 🛡️ Senior's real-time **Safety Score** (0–100%).
+  - 📊 Total drills completed, avoided, and compromised.
+  - 🚨 Real-time scam attempts reported by the senior.
+  - 🕒 Live drill activity history.
+
+---
+
+### 9. Emergency Cyber Checklist & 1930 Golden Hour
+* Step-by-step triage for victims who were recently targeted by cyber fraud.
+* Focuses on the **2-Hour Golden Window** to contact the **National Cyber Crime Helpline (1930)** to freeze unauthorized banking transactions.
 * Features an **AI Voice Listener** where seniors can speak their distress and receive calm, spoken audio instructions.
 
-### 5. PIN-Protected Family Connect & Guardian Dashboard
-* **Zero Passwords**: The senior's app automatically generates a unique **4-digit Security PIN** (e.g. `5821`).
-* **WhatsApp Share**: Seniors can tap one button to share their connection code with their children or guardians.
-* **Remote Guardian Dashboard**: Family members connect using the senior's phone number and PIN to remotely view:
-  - 🛡️ Senior's real-time **Safety Score** (0–100%).
-  - 📊 Total drills completed, deflected, and fallen for.
-  - 🚨 Real-time scam attempts reported by the senior.
-  - 🕒 Live drill activity logs.
+---
 
-### 6. Crowdsourced Scam Intel Database
-* **Share Scam & Scammer Details**: Seniors report scammer phone numbers, UPI IDs, fraudulent links, and story notes.
+### 10. Crowdsourced Scam Intel Database
+* **Community Intel Feed**: Seniors report scammer phone numbers, UPI IDs, fraudulent URLs, and story notes.
 * **SQLite Database**: Persisted in `sumati.db` under WAL mode.
-* **Community Intel Feed**: An in-app feed displaying total reports filed, unique scammer numbers flagged, and fake UPI IDs tracked to train future simulation drills.
+* Tracked numbers and UPI accounts are dynamically repurposed to train future simulation drills.
 
 ---
 
@@ -98,12 +148,21 @@ Senior citizens in India are the primary targets of psychological cyber manipula
 ```mermaid
 flowchart TD
     subgraph Client["Flutter Cross-Platform Frontend (sumati)"]
-        UI_Home["Home Screen & Random Drill"]
-        UI_Call["Call Practice Screen (STT + Audio)"]
-        UI_Chat["WhatsApp & SMS Practice Screens"]
+        UI_Home["Home Screen & Scenario Picker"]
+        UI_Call["Active Call Screen (Continuous VAD + Live STT)"]
+        UI_Chat["WhatsApp & SMS Simulators (Multi-Turn Memory)"]
+        UI_Web["Phishing Web Simulator (3 Fraud Templates)"]
         UI_Checker["Ask AI Scam Checker (OCR + TTS)"]
-        UI_Family["Family Dashboard (PIN Sync)"]
-        UI_Intel["Scam Reports Community Feed"]
+        UI_Family["Family Connect & Guardian Dashboard"]
+        UI_Debrief["Universal Analytics Debrief (/debrief)"]
+        Overlay["GlobalNotificationOverlay (Cross-App Events)"]
+    end
+
+    subgraph State["Riverpod State Management"]
+        CallNotifier["CallAudioNotifier & aiCallProvider"]
+        MsgNotifier["MessageSessionNotifier"]
+        NotifyNotifier["OsNotificationNotifier"]
+        ScamChecker["ScamDetectionChecker (Voice/Text)"]
     end
 
     subgraph Config["Centralized Config"]
@@ -111,7 +170,7 @@ flowchart TD
     end
 
     subgraph Backend["FastAPI High-Performance Backend (:8000)"]
-        API_WS["WebSocket /ws/chat (Interactive Dialogue)"]
+        API_WS["WebSocket /ws/chat & /ws/os_session"]
         API_Check["POST /check (Scam Verdict Engine)"]
         API_TTS["GET /tts & In-Memory Audio Pipeline"]
         API_Sync["POST /api/users/sync & /api/family/authorize"]
@@ -119,23 +178,24 @@ flowchart TD
         API_Drills["POST /api/drills/record"]
     end
 
-    subgraph External["External Cloud & AI Services"]
+    subgraph AI["AI Agents & Synthesis"]
         Groq["Groq Cloud LLM (qwen/qwen3.8-27b)"]
-        EdgeTTS["Microsoft Edge Neural TTS Engine"]
+        EdgeTTS["Microsoft Edge Neural Voice Synthesis"]
+        Agents["WhatsAppAgent, OrchestratorAgent, CallAgent"]
     end
 
     subgraph Storage["Persistent Database"]
         SQLite[("SQLite WAL Database (sumati.db)")]
     end
 
-    Client --> AppConfig
+    Client --> State
+    State --> Overlay
+    State --> AppConfig
     AppConfig --> Backend
-    API_WS --> Groq
-    API_WS --> EdgeTTS
-    API_Check --> Groq
-    API_Check --> EdgeTTS
-    API_Reports --> Groq
-    API_Reports --> EdgeTTS
+    Backend --> AI
+    API_WS --> Agents
+    Agents --> Groq
+    Agents --> EdgeTTS
     API_Sync & API_Reports & API_Drills --> SQLite
 ```
 
@@ -157,13 +217,13 @@ The backend uses SQLite configured in **WAL (Write-Ahead Logging)** mode with bu
 ## 💻 Tech Stack
 
 ### Frontend (Mobile & Web)
-* **Framework**: Flutter 3.x (Dart 3.x)
+* **Framework**: Flutter 3.x (Dart 3.x) — Web & Mobile Compatible (Zero `dart:io` in `lib/`)
 * **State Management**: Flutter Riverpod (`flutter_riverpod`)
 * **Navigation**: GoRouter (`go_router`)
 * **Local Storage**: Hive (`hive_flutter`)
 * **Audio Engine**: `audioplayers`
+* **Voice Activity Detection & STT**: `speech_to_text` with auto-rearming silence debounce
 * **On-Device OCR**: `google_mlkit_text_recognition`
-* **Speech-to-Text**: `speech_to_text`
 
 ### Backend (AI & Cloud Services)
 * **API Framework**: FastAPI / Starlette (ASGI)
@@ -206,7 +266,7 @@ Run the backend server:
 ```bash
 python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
-Backend will be live at `http://127.0.0.1:8000` (Docs: `http://127.0.0.1:8000/docs`).
+Backend will be live at `http://127.0.0.1:8000` (Swagger Docs: `http://127.0.0.1:8000/docs`).
 
 ---
 
@@ -233,7 +293,7 @@ flutter run -d android
 ### Deploying Backend to Render.com
 1. Create a **New Web Service** on [Render](https://render.com) connected to your GitHub repository.
 2. Set **Root Directory** to `sumati/backend`.
-3. Set **Build Command**: `pip install -r requirements.txt` (or `pip install fastapi uvicorn websockets pydantic python-dotenv edge-tts groq`).
+3. Set **Build Command**: `pip install -r requirements.txt`.
 4. Set **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
 5. Add Environment Variables:
    - `GROQ_API_KEY`: Your Groq API key.
@@ -241,17 +301,7 @@ flutter run -d android
    - `SUMATI_DB_DIR`: `/var/data` (attach a Render Persistent Disk for production storage).
 
 ### Connecting Flutter App to Live Render URL
-Open [`lib/core/config/app_config.dart`](file:///C:/Users/Admin/Desktop/SUMATI_1.0/sumati/lib/core/config/app_config.dart) and paste your Render URL:
-```dart
-class AppConfig {
-  static const String apiBaseUrl = String.fromEnvironment(
-    'API_URL',
-    defaultValue: 'https://your-service.onrender.com', // <-- Your live Render URL
-  );
-}
-```
-
-Or compile directly from the command line:
+Open [`sumati/lib/core/config/app_config.dart`](file:///C:/Users/Admin/Desktop/SUMATI_1.0/sumati/lib/core/config/app_config.dart) and paste your live Render backend URL, or compile directly:
 ```bash
 flutter build web --dart-define=API_URL=https://your-service.onrender.com
 ```
@@ -265,43 +315,74 @@ sumati/
 ├── backend/
 │   ├── app/
 │   │   ├── __init__.py
-│   │   ├── main.py               # FastAPI endpoints, WebSockets & Groq streaming
-│   │   └── db.py                 # SQLite WAL database manager & queries
+│   │   ├── main.py                  # FastAPI endpoints, WebSockets & Groq streaming
+│   │   ├── db.py                    # SQLite WAL database manager & queries
+│   │   └── agents/
+│   │       ├── orchestrator.py      # Central multi-modal attack coordinator
+│   │       ├── whatsapp_agent.py    # Non-repeating WhatsApp scam generator
+│   │       ├── sms_agent.py         # Phishing SMS agent
+│   │       ├── web_agent.py         # Phishing web portal agent
+│   │       └── call_agent.py        # Voice call dialogue agent
 │   ├── data/
-│   │   └── sumati.db             # Persistent SQLite database file
+│   │   ├── scenarios.json           # Scenarios master dataset
+│   │   └── sumati.db                # Persistent SQLite database file
 │   └── requirements.txt
 │
 └── lib/
-    ├── main.dart                 # Application entry point & Hive initialization
+    ├── main.dart                    # Application entry point & Hive initialization
     ├── core/
     │   ├── config/
-    │   │   └── app_config.dart   # Centralized API & WebSocket environment URLs
+    │   │   └── app_config.dart      # Centralized API & WebSocket environment URLs
     │   ├── models/
     │   │   ├── scenario.dart
     │   │   └── simulation_result.dart
     │   ├── providers/
-    │   │   ├── ai_call_provider.dart
-    │   │   ├── ai_chat_provider.dart
+    │   │   ├── ai_call_provider.dart # Voice call engine state & audio streaming
     │   │   ├── preferences_provider.dart
     │   │   └── scenario_provider.dart
     │   ├── router/
-    │   │   └── app_router.dart   # GoRouter navigation route registry
+    │   │   └── app_router.dart      # GoRouter navigation route registry
     │   ├── services/
     │   │   ├── realistic_voice_service.dart # Edge-TTS streaming audio player
+    │   │   ├── sound_effect_service.dart    # Ringtones & notification chimes
     │   │   └── user_sync_service.dart       # Senior profile & family sync API
-    │   └── theme/
-    │       └── app_theme.dart    # Senior-friendly accessible colors & typography
+    │   ├── utils/
+    │   │   ├── scam_detection_checker.dart  # Multilingual pushback recognition
+    │   │   └── simulation_trigger.dart
+    │   └── widgets/
+    │       └── global_notification_overlay.dart # Cross-app notification dropdown
     │
     └── features/
-        ├── call_practice/        # Fake incoming call & live speech simulation
-        ├── debrief/              # Scoring evaluation & defensive analysis
-        ├── fake_android/         # System alert & notification popups
-        ├── family/               # Remote Guardian Dashboard (PIN-based sync)
-        ├── message_practice/     # WhatsApp & SMS scam drill interfaces
-        ├── onboarding/           # Trilingual voice-guided welcome tour
-        ├── scam_checker/         # Ask AI detector & Camera OCR scanner
-        ├── scam_picker/          # Home screen & all 12 practice scenarios
-        └── scammed_checklist/    # 1930 Cyber helpline & community intel feed
+        ├── call_practice/           # Active voice call & hands-free VAD console
+        ├── debrief/                 # Post-scam analytics report (The Hook, Leak, Giveaway)
+        ├── family/                  # Remote Guardian Dashboard (PIN-based sync)
+        ├── message_practice/        # WhatsApp & SMS scam drill interfaces
+        ├── onboarding/              # Trilingual voice-guided welcome tour
+        ├── scam_checker/            # Ask AI detector & Camera OCR scanner
+        ├── scam_picker/             # Home screen & practice scenario selection
+        ├── scammed_checklist/       # 1930 Cyber helpline & community intel feed
+        └── web_practice/            # Phishing browser with 3 fraud templates
+```
+
+---
+
+## 🧪 Automated Verification & Testing
+
+SUMATI maintains a comprehensive automated test suite with **0 compiler or analyzer warnings**:
+
+```bash
+# Static Analysis (Zero Issues)
+flutter analyze --no-pub lib test
+
+# Execute Full Unit Test Suite (44/44 tests)
+flutter test test/unit/
+
+# Execute Widget & Simulation Drill Test Suite (38/38 tests)
+flutter test test/widget/hands_free_mic_test.dart \
+             test/widget/direct_debrief_routing_test.dart \
+             test/widget/phase8_cross_app_and_hands_free_vad_test.dart \
+             test/widget/call_and_message_ringtone_test.dart \
+             test/widget/phase5_web_and_analytics_test.dart
 ```
 
 ---

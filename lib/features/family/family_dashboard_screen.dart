@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -74,6 +75,16 @@ class _FamilyDashboardScreenState extends ConsumerState<FamilyDashboardScreen> w
 
     if (phone.isEmpty || pin.isEmpty) {
       setState(() => _connectError = 'Please enter both Senior Mobile Number and 4-digit PIN.');
+      return;
+    }
+
+    if (phone.length != 10) {
+      setState(() => _connectError = 'Please enter a valid 10-digit mobile number.');
+      return;
+    }
+
+    if (pin.length != 4) {
+      setState(() => _connectError = 'Please enter a valid 4-digit security PIN.');
       return;
     }
 
@@ -268,11 +279,17 @@ class _FamilyDashboardScreenState extends ConsumerState<FamilyDashboardScreen> w
                 TextField(
                   controller: _seniorPhoneController,
                   keyboardType: TextInputType.phone,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(10),
+                  ],
+                  maxLength: 10,
                   decoration: InputDecoration(
-                    labelText: 'Senior Mobile Number / मोबाइल नंबर',
+                    labelText: 'Senior Mobile Number / मोबाइल नंबर (10 digits)',
                     hintText: 'e.g. 9820123456',
                     prefixIcon: const Icon(Icons.phone_rounded),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                    counterText: '',
                   ),
                 ),
                 const SizedBox(height: 14),
@@ -281,7 +298,11 @@ class _FamilyDashboardScreenState extends ConsumerState<FamilyDashboardScreen> w
                 TextField(
                   controller: _pinController,
                   keyboardType: TextInputType.number,
-                  maxLength: 6,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(4),
+                  ],
+                  maxLength: 4,
                   decoration: InputDecoration(
                     labelText: '4-Digit Security PIN / सुरक्षा पिन',
                     hintText: 'e.g. 5821',

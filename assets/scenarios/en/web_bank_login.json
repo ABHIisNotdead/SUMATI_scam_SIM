@@ -1,0 +1,14 @@
+{
+  "id": "web_bank_login",
+  "language": "en",
+  "title": "Urgent Bank NetBanking Update",
+  "channel": "web",
+  "difficulty": "easy",
+  "scammer_name": "Metro Trust Bank Portal",
+  "persona": "a clone of a bank login portal asking for username, password, and ATM PIN",
+  "goal": "steal online banking credentials and ATM PIN",
+  "initial_message": "Urgent verification required: Update your NetBanking credentials to prevent account suspension.",
+  "debrief_success": "Outstanding! You inspected the domain and safely closed the page without entering your passwords.",
+  "debrief_failure": "You entered your bank credentials! Phishing websites copy the look of official banks to steal passwords."
+}
+

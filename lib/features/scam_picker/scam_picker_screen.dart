@@ -82,7 +82,7 @@ class _ScamPickerScreenState extends ConsumerState<ScamPickerScreen> {
     final prefBox = Hive.box('preferences');
     final currentName = prefBox.get('userName', defaultValue: 'दादा जी (Senior)') as String;
     final currentPhone = prefBox.get('userPhone', defaultValue: '') as String;
-    final currentPin = UserSyncService.getOrCreatePin();
+    final savedPin = prefBox.get('userPin') as String?;
 
     final nameController = TextEditingController(text: currentName);
     final phoneController = TextEditingController(text: currentPhone);
@@ -135,54 +135,82 @@ class _ScamPickerScreenState extends ConsumerState<ScamPickerScreen> {
             TextField(
               controller: phoneController,
               keyboardType: TextInputType.phone,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(10),
+              ],
+              maxLength: 10,
               decoration: InputDecoration(
-                labelText: 'Mobile Number / मोबाइल नंबर',
-                hintText: '98201 XXXXX',
+                labelText: 'Mobile Number / मोबाइल नंबर (10 digits)',
+                hintText: '9820123456',
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
                 prefixIcon: const Icon(Icons.phone_rounded),
+                counterText: '',
               ),
             ),
             const SizedBox(height: 14),
             // Family PIN display card
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-              decoration: BoxDecoration(
-                color: const Color(0xFFF0FDF4),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFF86EFAC)),
-              ),
-              child: Row(
-                children: [
-                  const Icon(Icons.lock_outline_rounded, color: Color(0xFF15803D), size: 22),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Family Connect 4-Digit PIN:',
-                          style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Color(0xFF15803D)),
-                        ),
-                        Text(
-                          currentPin,
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: Color(0xFF15803D), letterSpacing: 2),
-                        ),
-                      ],
+            if (savedPin != null && savedPin.isNotEmpty)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF0FDF4),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: const Color(0xFF86EFAC)),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.lock_outline_rounded, color: Color(0xFF15803D), size: 22),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Family Connect 4-Digit PIN:',
+                            style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Color(0xFF15803D)),
+                          ),
+                          Text(
+                            savedPin,
+                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: Color(0xFF15803D), letterSpacing: 2),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  TextButton.icon(
-                    onPressed: () {
-                      Clipboard.setData(ClipboardData(text: currentPin));
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('PIN copied to clipboard!')),
-                      );
-                    },
-                    icon: const Icon(Icons.copy_rounded, size: 16),
-                    label: const Text('Copy'),
-                  ),
-                ],
+                    TextButton.icon(
+                      onPressed: () {
+                        Clipboard.setData(ClipboardData(text: savedPin));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('PIN copied to clipboard!')),
+                        );
+                      },
+                      icon: const Icon(Icons.copy_rounded, size: 16),
+                      label: const Text('Copy'),
+                    ),
+                  ],
+                ),
+              )
+            else
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFEFF6FF),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: const Color(0xFFBFDBFE)),
+                ),
+                child: Row(
+                  children: const [
+                    Icon(Icons.info_outline_rounded, color: Color(0xFF1D4ED8), size: 20),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        'A unique 4-digit PIN will be generated by the database once you save your 10-digit number.',
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF1D4ED8)),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
             const SizedBox(height: 20),
             SizedBox(
               height: 52,
@@ -190,22 +218,102 @@ class _ScamPickerScreenState extends ConsumerState<ScamPickerScreen> {
                 onPressed: () async {
                   final newName = nameController.text.trim();
                   final newPhone = phoneController.text.trim();
-                  prefBox.put('userName', newName);
-                  prefBox.put('userPhone', newPhone);
-                  
+
+                  if (newPhone.length != 10) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please enter a valid 10-digit mobile number • 10 अंकों का मोबाइल नंबर दर्ज करें'),
+                        backgroundColor: Color(0xFFDC2626),
+                      ),
+                    );
+                    return;
+                  }
+
                   // Sync with backend SQLite
-                  await UserSyncService.syncUserProfile(
+                  final syncRes = await UserSyncService.syncUserProfile(
                     name: newName,
                     phone: newPhone,
-                    pin: currentPin,
                   );
+
+                  // Batch sync all past local drill records to the database
+                  await UserSyncService.syncHistoricalDrills(newPhone);
+
+                  final assignedPin = syncRes?['pin'] as String? ?? (prefBox.get('userPin', defaultValue: '') as String);
 
                   if (mounted) {
                     setState(() {});
                     Navigator.of(ctx).pop();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Profile & PIN synced with database! • प्रोफ़ाइल सहेजी गई')),
-                    );
+
+                    // Show prominent confirmation dialog with generated PIN
+                    if (assignedPin.isNotEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (dCtx) => AlertDialog(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          title: Row(
+                            children: const [
+                              Icon(Icons.check_circle_rounded, color: Color(0xFF15803D), size: 26),
+                              SizedBox(width: 10),
+                              Text('Profile & PIN Ready', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                            ],
+                          ),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Your profile and drill history have been synced to the database. Share this 4-digit PIN with your family member to connect their dashboard:',
+                                style: TextStyle(fontSize: 13, height: 1.4),
+                              ),
+                              const SizedBox(height: 16),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFF0FDF4),
+                                  borderRadius: BorderRadius.circular(14),
+                                  border: Border.all(color: const Color(0xFF86EFAC), width: 1.5),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      assignedPin,
+                                      style: const TextStyle(
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.w900,
+                                        letterSpacing: 4,
+                                        color: Color(0xFF15803D),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    IconButton(
+                                      icon: const Icon(Icons.copy_rounded, color: Color(0xFF15803D)),
+                                      onPressed: () {
+                                        Clipboard.setData(ClipboardData(text: assignedPin));
+                                        ScaffoldMessenger.of(dCtx).showSnackBar(
+                                          const SnackBar(content: Text('PIN copied to clipboard!')),
+                                        );
+                                      },
+                                      tooltip: 'Copy PIN',
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(dCtx).pop(),
+                              child: const Text('OK / ठीक है', style: TextStyle(fontWeight: FontWeight.bold)),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Profile saved successfully! • प्रोफ़ाइल सहेजी गई')),
+                      );
+                    }
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -226,7 +334,7 @@ class _ScamPickerScreenState extends ConsumerState<ScamPickerScreen> {
     final prefBox = Hive.box('preferences');
     final currentPhone = prefBox.get('userPhone', defaultValue: '') as String;
     final currentName = prefBox.get('userName', defaultValue: 'दादा जी (Senior)') as String;
-    final currentPin = UserSyncService.getOrCreatePin();
+    final currentPin = prefBox.get('userPin') as String? ?? '----';
 
     showModalBottomSheet(
       context: context,

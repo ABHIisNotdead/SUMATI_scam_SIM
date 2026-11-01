@@ -145,7 +145,11 @@ final routerProvider = Provider<GoRouter>((ref) {
           if (extra is Map<String, dynamic>) {
             return DebriefScreen(
               outcome: extra['outcome'] ?? 'success:survived',
-              customMessage: extra['message'],
+              customMessage: extra['message'] ?? extra['customMessage'],
+              scenarioId: (extra['scenario_id'] ?? extra['scenarioId']) as String?,
+              hook: extra['hook'] as String?,
+              leak: extra['leak'] as String?,
+              giveaway: extra['giveaway'] as String?,
             );
           } else if (extra is String) {
             return DebriefScreen(outcome: extra);

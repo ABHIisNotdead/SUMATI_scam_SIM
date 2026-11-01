@@ -16,6 +16,13 @@ class OnboardingScreen extends ConsumerStatefulWidget {
 class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
+  RealisticVoiceService? _voiceService;
+
+  @override
+  void initState() {
+    super.initState();
+    _voiceService = ref.read(realisticVoiceProvider);
+  }
 
   Future<void> _finishOnboarding() async {
     await ref.read(preferencesProvider.notifier).completeOnboarding();
@@ -61,7 +68,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   @override
   void dispose() {
-    ref.read(realisticVoiceProvider).stop();
+    _voiceService?.stop();
     _pageController.dispose();
     super.dispose();
   }

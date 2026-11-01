@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import '../localization/ui_strings.dart';
 import '../models/scenario.dart';
 import '../models/simulation_result.dart';
+import '../services/sound_effect_service.dart';
 import '../theme/app_theme.dart';
 
 class SimulationTrigger {
@@ -19,7 +20,10 @@ class SimulationTrigger {
     return 'en';
   }
 
-  static void cancelActiveSimulation() {
+  static void cancelActiveSimulation({bool stopRingtone = true}) {
+    if (stopRingtone) {
+      SoundEffectService.instance.stopCallRingtone();
+    }
     _autoOpenTimer?.cancel();
     _autoOpenTimer = null;
     _activeOverlay?.remove();
@@ -27,7 +31,7 @@ class SimulationTrigger {
   }
 
   static void startSimulation(BuildContext context, Scenario? scenario) {
-    cancelActiveSimulation();
+    cancelActiveSimulation(stopRingtone: true);
     if (scenario == null) return;
 
     final lang = _lang();
@@ -52,16 +56,19 @@ class SimulationTrigger {
       iconBg = Colors.green.shade700;
       appName = UiStrings.get(lang, 'incoming_phone_call');
       previewText = '${UiStrings.get(lang, 'incoming_call_from')} $title';
+      SoundEffectService.instance.playCallRingtone();
     } else if (channel == 'whatsapp') {
       icon = Icons.chat;
       iconBg = const Color(0xFF25D366);
       appName = 'WhatsApp';
       previewText = initialMsg;
+      SoundEffectService.instance.playNotificationChime();
     } else if (channel == 'sms') {
       icon = Icons.textsms;
       iconBg = Colors.blue.shade700;
       appName = UiStrings.get(lang, 'sms_alert');
       previewText = initialMsg;
+      SoundEffectService.instance.playNotificationChime();
     }
 
     final overlayState = Overlay.of(context);
@@ -76,7 +83,8 @@ class SimulationTrigger {
         iconBg: iconBg,
         lang: lang,
         onTap: () {
-          cancelActiveSimulation();
+          final isIncomingCall = channel == 'call';
+          cancelActiveSimulation(stopRingtone: !isIncomingCall);
           if (channel == 'call') {
             context.replace('/practice/call', extra: {'scenario': scenario, 'startActive': false});
           } else if (channel == 'sms') {
@@ -86,10 +94,10 @@ class SimulationTrigger {
           }
         },
         onDismissed: () {
-          cancelActiveSimulation();
+          cancelActiveSimulation(stopRingtone: true);
         },
         onDeclineCall: () {
-          cancelActiveSimulation();
+          cancelActiveSimulation(stopRingtone: true);
           SimulationResult.recordResult(
             scenarioTitle: scenario.title,
             channel: 'call',
@@ -102,7 +110,7 @@ class SimulationTrigger {
           });
         },
         onAcceptCall: () {
-          cancelActiveSimulation();
+          cancelActiveSimulation(stopRingtone: true);
           context.replace('/practice/call', extra: {'scenario': scenario, 'startActive': true});
         },
       ),
@@ -113,7 +121,8 @@ class SimulationTrigger {
     // Auto-open after 5 seconds if ignored by the user
     _autoOpenTimer = Timer(const Duration(seconds: 5), () {
       if (context.mounted && _activeOverlay != null) {
-        cancelActiveSimulation();
+        final isIncomingCall = channel == 'call';
+        cancelActiveSimulation(stopRingtone: !isIncomingCall);
         if (channel == 'call') {
           // If no interaction in 5 seconds, navigate to /practice/call (startActive: false)
           context.replace('/practice/call', extra: {'scenario': scenario, 'startActive': false});
